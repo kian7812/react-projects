@@ -1,0 +1,12 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.App {
+  /* width: 1090px; */
+
+  width: 80%;
+  margin: 50px auto;
+}
