@@ -1,36 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { Button } from "@/components/ui/button"
+import { Header } from '@/components/Header'
+import { ITodoItem } from '@/components/ToDoItem'
+import { AddToDo } from '@/components/AddToDo'
+import { ToDoList } from '@/components/ToDoList'
+import { useLocalStorage } from 'usehooks-ts'
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [list, setList] = useLocalStorage<ITodoItem[]>("todolist-local-key", [])
+
+  const addList = (newItem: string) => {
+    setList((oldList) => {
+      const newId =
+        list.length === 0 ? 0 : Math.max(...oldList.map((v) => v.id), 0) + 1;
+
+      return [
+        {
+          id: newId,
+          completed: false,
+          text: newItem
+        },
+        ...oldList
+      ]
+    })
+  }
+  const markTaskStatus = (item: Omit<ITodoItem, "text">) => {
+    setList((pre) => {
+      return pre.map((i) => {
+        if (i.id === item.id) {
+          return {
+            ...i,
+            ...item
+          }
+        } else {
+          return i
+        }
+      })
+    })
+  }
+  const deleteTask = (id: number) => {
+    setList((l) => {
+      return l.filter((e) => e.id !== id);
+    })
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <Button>Click me</Button>
-    </>
+    <section className='container space-y-3'>
+      <Header />
+      <AddToDo addList={addList} />
+      <ToDoList list={list} markTaskStatus={markTaskStatus} deleteTask={deleteTask} />
+    </section>
   )
 }
 
