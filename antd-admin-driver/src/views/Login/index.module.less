@@ -1,0 +1,21 @@
+.loginPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  // ✅让 loginTitle 作为全局样式，且是 loginPage 编译后的 子选择器
+  :global(.loginTitle) {
+    margin-bottom: 20px;
+    line-height: 20px;
+    font-size: 18px;
+    text-align: center;
+  }
+  .loginWrapper {
+    width: 320px;
+  }
+
+  // ✅修改antd的全局样式
+  :global(.ant-btn-primary) {
+    // background-color: red;
+  }
+}

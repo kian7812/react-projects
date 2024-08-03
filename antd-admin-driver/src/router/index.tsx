@@ -1,17 +1,28 @@
 // tsx 文件
 
 import { createBrowserRouter, Navigate, useRoutes } from 'react-router-dom';
-import Login from '@/views/login/Login';
+import Login from '@/views/Login';
 import NotFound from '@/views/404';
+import Welcome from '@/views/Welcome';
+import DefaultLayout from '@/layout/DefaultLayout';
 
 const router = [
   {
     path: '/',
-    element: <div>wel</div>
+    element: <Navigate to='/welcome' /> // 使用 Navigate 重定向
   },
   {
     path: '/login',
     element: <Login />
+  },
+  {
+    element: <DefaultLayout />,
+    children: [
+      {
+        path: '/welcome',
+        element: <Welcome />
+      }
+    ]
   },
   // ✅路由不存在
   {

@@ -16,29 +16,34 @@ if (import.meta.env.VITE_ENV === 'dev') {
 }
 
 // 配置信息
+// ✅不在.env文件里管理，在这里统一管理变量。
 const config = {
   dev: {
-    baseApi: '/api',
-    uploadApi: 'http:api-driver-dev.marsview.cc',
-    cdn: 'http: xxx.aliyun.com',
-    mock: false,
-    mockApi: 'https: www.fastmock.site/mock/xxxx/api'
+    baseApi: '/local-api', // ✅本地连接项目后端服务
+    cdn: 'http:xxx.aliyun.com',
+    mock: true, // 开关✅
+    mockApi: '/mock-local-api' // ✅本地mock拦截
+    // mockApi: 'https://www.fastmock.site/xxx' // ✅远程mock
   },
   test: {
-    baseApi: '/api',
-    uploadApi: 'http:api-driver-dev.marsview.cc',
+    baseApi: 'http:api-driver-dev.marsview.cc',
     cdn: 'http: xxx.aliyun.com',
     mock: false,
-    mockApi: 'https: www.fastmock.site/mock/xxxx/api'
+    mockApi: 'https://www.fastmock.site/xxx'
   },
   prod: {
-    baseApi: '/api',
-    uploadApi: 'http:api-driver-dev.marsview.cc',
+    baseApi: 'http:api-driver-dev.marsview.cc',
     cdn: 'http: xxx.aliyun.com',
     mock: false,
-    mockApi: 'https: www.fastmock.site/mock/xxxx/api'
+    mockApi: 'https://www.fastmock.site/xxx'
   },
 }
+
+console.log('env:', {
+  env,
+  ...config[env]
+});
+
 
 export default {
   env,
