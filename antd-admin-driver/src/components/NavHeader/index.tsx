@@ -1,9 +1,12 @@
 import { Breadcrumb, Dropdown, MenuProps, Switch } from "antd"
 import { MenuFoldOutlined } from '@ant-design/icons'
 import styles from './index.module.less'
+import storage from '@/utils/storage';
+import { useEffect } from "react";
 
 
 export default function NavHeader() {
+  const userName = storage.get('userInfo').userName
 
   const breadList = [
     {
@@ -25,6 +28,10 @@ export default function NavHeader() {
     }
   ]
 
+  useEffect(() => {
+    // storage
+  })
+
   return (
     <div className={styles.navHeader}>
       <div className={styles.left}>
@@ -34,7 +41,7 @@ export default function NavHeader() {
       <div className={styles.right}>
         <Switch className={styles.mr10} checkedChildren="暗黑" unCheckedChildren="默认" />
         <Dropdown menu={{ items }} trigger={['click']}>
-          <span className={styles.nickName}>Danny</span>
+          <span className={styles.nickName}>{userName}</span>
         </Dropdown>
       </div>
     </div>

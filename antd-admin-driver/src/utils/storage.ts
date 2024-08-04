@@ -1,6 +1,8 @@
 
 // ✅ 为了序列化 对象类型 val
 
+const KEY_PREFIX = 'ANTD_ADMIN_DRIVER__'
+
 export default {
   /**
    * 存储
@@ -8,14 +10,14 @@ export default {
    * @param val 值
    */
   set(key: string, val: any) {
-    localStorage.setItem(key, JSON.stringify(val))
+    localStorage.setItem(KEY_PREFIX + key, JSON.stringify(val))
   },
   /**
    * 读取
    * @param key 名
    */
   get(key: string) {
-    const val = localStorage.getItem(key)
+    const val = localStorage.getItem(KEY_PREFIX + key)
     if (!val) return ''
 
     try {

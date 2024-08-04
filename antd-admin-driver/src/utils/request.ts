@@ -20,7 +20,7 @@ instance.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么
   const token = storage.get('token')
   if (token) {
-    config.headers.Authorization = 'Token::' + token
+    config.headers.Authorization = 'Bearer ' + token // jwt 固定格式
   }
 
   if (env.mock) {
@@ -53,7 +53,7 @@ instance.interceptors.response.use(function (response) {
   if (result.code === 500001) {
     message.error(result.message)
     storage.remove('token')
-    // location.href = '/login'
+    location.href = '/login'
   } else if (result.code !== 0) {
     if (response.config.showError === false) {
       return Promise.resolve(result) // 注意是 resolve

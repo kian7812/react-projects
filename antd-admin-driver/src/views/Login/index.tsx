@@ -1,5 +1,6 @@
 
-import { Button, Form, Input, message } from 'antd';
+import { Button, Form, Input } from 'antd';
+import { message } from '@/components/AntdGlobal'
 import styles from './index.module.less';
 import api from '@/api';
 import { ILogin } from '@/types/modules/user';

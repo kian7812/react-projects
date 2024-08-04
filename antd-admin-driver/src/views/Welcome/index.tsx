@@ -7,7 +7,6 @@ export default function Welcome() {
       <h2 className={styles.title}>
         欢迎体验
       </h2>
-
     </div>
   )
 }

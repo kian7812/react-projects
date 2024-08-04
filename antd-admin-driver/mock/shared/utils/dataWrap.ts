@@ -2,14 +2,22 @@ export function successWrap(data) {
   return {
     code: 0,
     message: 'success',
-    result: data,
+    data: data,
   }
 }
 
-export function errorWrap(message?) {
+export function noneUserWrap(message?) {
   return {
     code: 401,
-    message: message,
-    result: null,
+    message: message || '没有此用户',
+    data: null,
+  }
+}
+
+export function noneTokenWrap(message?) {
+  return {
+    code: 500001,
+    message: message || 'token 失效',
+    data: null,
   }
 }
