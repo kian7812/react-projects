@@ -8,7 +8,10 @@ import { message } from '@/components/AntdGlobal'
 const instance = axios.create({
   // baseURL: 'https://some-domain.com/api/',
   timeout: 8000,
-  headers: { 'X-Custom-Header': 'foobar' },
+  headers: {
+    'X-Custom-Header': 'foobar',
+    iCode: '' // 防盗码
+  },
   withCredentials: true, // 跨域
 });
 
@@ -19,8 +22,6 @@ instance.interceptors.request.use(function (config) {
   if (token) {
     config.headers.Authorization = 'Token::' + token
   }
-
-  // config.headers.iCode = '' // 防盗码
 
   if (env.mock) {
     config.baseURL = env.mockApi
