@@ -2,7 +2,6 @@ import { Breadcrumb, Dropdown, MenuProps, Switch } from "antd"
 import { MenuFoldOutlined } from '@ant-design/icons'
 import styles from './index.module.less'
 import storage from '@/utils/storage';
-import { useEffect } from "react";
 
 
 export default function NavHeader() {
@@ -19,18 +18,22 @@ export default function NavHeader() {
 
   const items: MenuProps['items'] = [
     {
-      key: '1',
+      key: 'email',
       label: '邮箱：Danny@xx.com'
     },
     {
-      key: '2',
+      key: 'logout',
       label: '退出'
     }
   ]
 
-  useEffect(() => {
-    // storage
-  })
+
+  const onClick: MenuProps['onClick'] = ({ key }) => {
+    if (key === 'logout') {
+      storage.remove('token')
+      location.href = '/login?callback=' + encodeURIComponent(location.href)
+    }
+  }
 
   return (
     <div className={styles.navHeader}>
@@ -40,7 +43,7 @@ export default function NavHeader() {
       </div>
       <div className={styles.right}>
         <Switch className={styles.mr10} checkedChildren="暗黑" unCheckedChildren="默认" />
-        <Dropdown menu={{ items }} trigger={['click']}>
+        <Dropdown menu={{ items, onClick }}>
           <span className={styles.nickName}>{userName}</span>
         </Dropdown>
       </div>
