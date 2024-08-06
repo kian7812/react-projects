@@ -6,6 +6,6 @@ export default {
     return request.post('/users/login', params)
   },
   getUserInfo() {
-    return request.get<IUser.IUserItem>('/users/getUserInfo')
+    return request.get<IUser.UserInfo>('/users/getUserInfo')
   }
 }

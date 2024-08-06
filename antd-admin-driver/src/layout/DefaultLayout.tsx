@@ -7,15 +7,12 @@ import { Outlet } from 'react-router-dom';
 import styles from './index.module.less'
 import api from '@/api';
 import storage from '@/utils/storage';
+import { useUserInfoStore } from '@/store/index'
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const App: React.FC = () => {
-  // 样式
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
-
+  const updateUserInfo = useUserInfoStore((state) => state.updateUserInfo)
 
   useEffect(() => {
     getUserInfo()
@@ -26,7 +23,14 @@ const App: React.FC = () => {
     const data = await api.getUserInfo()
     console.log(data);
     storage.set('userInfo', data)
+    updateUserInfo(data)
   }
+
+  // 样式
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
+
 
   return (
     // Watermark 水印✅ 

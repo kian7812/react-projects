@@ -8,7 +8,7 @@ export namespace ILogin {
 }
 
 export namespace IUser {
-  export interface IUserItem {
+  export interface UserInfo {
     _id?: string;
     userId?: number;
     userName: string;
