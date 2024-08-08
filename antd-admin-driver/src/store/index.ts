@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { IUser } from '@/types/modules/user'
+import { IUser } from '@/types/modules/api'
 
 interface IState {
   token: string;
@@ -10,8 +10,19 @@ interface IState {
 export const useUserInfoStore = create<IState>((set) => ({
   token: '',
   userInfo: {
+    _id: '',
+    userId: 0,
     userName: '',
-    userEmail: ''
+    userEmail: '',
+    state: 0,
+    mobile: '',
+    job: '',
+    role: 0,
+    roleList: '',
+    createId: 0,
+    deptId: '',
+    deptName: '',
+    userImg: '',
   },
   updateUserInfo: (userInfo: IUser.UserInfo) => {
     return set({ userInfo })

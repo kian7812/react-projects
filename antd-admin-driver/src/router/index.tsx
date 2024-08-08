@@ -5,6 +5,7 @@ import Login from '@/views/Login';
 import NotFound from '@/views/404';
 import Welcome from '@/views/Welcome';
 import DefaultLayout from '@/layout/DefaultLayout';
+import Dashboard from '@/views/Dashboard';
 
 const router = [
   {
@@ -21,6 +22,10 @@ const router = [
       {
         path: '/welcome',
         element: <Welcome />
+      },
+      {
+        path: '/dashboard',
+        element: <Dashboard />
       }
     ]
   },

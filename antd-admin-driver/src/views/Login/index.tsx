@@ -3,7 +3,7 @@ import { Button, Form, Input } from 'antd';
 import { message } from '@/components/AntdGlobal'
 import styles from './index.module.less';
 import api from '@/api';
-import { ILogin } from '@/types/modules/user';
+import { ILogin } from '@/types/modules/api';
 import storage from '@/utils/storage';
 import { useState } from 'react';
 

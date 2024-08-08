@@ -6,7 +6,7 @@ import { MOCK_LOCAL_API } from './shared/utils/constants'
 export default defineMock([
   {
     url: MOCK_LOCAL_API + '/users/login',
-    delay: 200,
+    delay: 180,
     body({ body, query, params, headers }) {
       const { userName, userPwd } = body
 
@@ -21,14 +21,44 @@ export default defineMock([
   },
   {
     url: MOCK_LOCAL_API + '/users/getUserInfo',
-    delay: 200,
+    delay: 180,
     body({ body, query, headers }) {
       const authorization = headers.authorization?.toUpperCase()
       const user = users.value.find(u => authorization?.includes(u.name.toUpperCase()))
 
       if (user) {
         return successWrap({
-          userName: user.name
+          userId: 1001,
+          userName: user.name,
+          userEmail: '123@xxx.com',
+          state: 1,
+          mobile: '12333212321',
+          job: '前端开发',
+          role: 0,
+          roleList: '1',
+          createId: 1,
+          deptId: '1',
+          deptName: '研发',
+          userImg: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        })
+      }
+
+      return noneTokenWrap()
+    }
+  },
+  {
+    url: MOCK_LOCAL_API + '/order/dashboard/getReportData',
+    delay: 180,
+    body({ body, query, params, headers }) {
+      const authorization = headers.authorization?.toUpperCase()
+      const user = users.value.find(u => authorization?.includes(u.name.toUpperCase()))
+
+      if (user) {
+        return successWrap({
+          driverCount: 2786000,
+          totalMoney: 39582000,
+          orderCount: 1238000,
+          cityNum: 80,
         })
       }
 

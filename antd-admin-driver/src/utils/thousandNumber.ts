@@ -5,7 +5,7 @@
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString
  */
 
-export function formatLocaleAmount(val: string | number) {
+export function formatLocaleAmount(val: string | number | undefined | null) {
   if (val === '' || val === undefined || val === null) return ''
 
   let num = parseFloat(val.toString())

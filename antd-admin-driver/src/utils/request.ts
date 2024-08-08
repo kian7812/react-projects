@@ -53,7 +53,7 @@ instance.interceptors.response.use(function (response) {
   if (result.code === 500001) {
     message.error(result.message)
     storage.remove('token')
-    location.href = '/login'
+    location.href = '/login?callback=' + encodeURIComponent(location.href)
   } else if (result.code !== 0) {
     if (response.config.showError === false) {
       return Promise.resolve(result) // 注意是 resolve

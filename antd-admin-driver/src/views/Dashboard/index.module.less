@@ -1,0 +1,24 @@
+.dashboard {
+}
+.userInfo {
+  display: flex;
+  align-items: center;
+  & > :nth-child(1) {
+  }
+  & > :nth-child(2) {
+    margin-left: 20px;
+    flex: 1;
+  }
+}
+// ✅图表需求高度，本身div是没内容的
+.itemChart {
+  height: 400px;
+}
+
+.pieChart {
+  display: flex;
+  .pieChartItem {
+    flex: 1;
+    height: 400px;
+  }
+}
