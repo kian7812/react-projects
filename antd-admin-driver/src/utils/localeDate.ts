@@ -21,10 +21,12 @@ type RegObjType = {
   [key: string]: number
 }
 
-export function formatDate(date?: Date, rule?: string) {
+export function formatDate(date?: Date | string | number, rule?: string) {
   let curDate = new Date()
-  if (date) {
+  if (date instanceof Date) {
     curDate = date
+  } else if (date) {
+    curDate = new Date(date)
   }
 
   // format time

@@ -1,5 +1,4 @@
 import { Avatar, Button, Card, Col, Descriptions, DescriptionsProps, Divider, Row } from "antd";
-import * as echarts from 'echarts';
 import styles from './index.module.less'
 import { useEffect, useState } from "react";
 import { useUserInfoStore } from "@/store";
