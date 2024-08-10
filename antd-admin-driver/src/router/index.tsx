@@ -29,7 +29,7 @@ const router = [
         element: <Dashboard />
       },
       {
-        path: '/user-list',
+        path: '/userList',
         element: <UserList />
       }
     ]

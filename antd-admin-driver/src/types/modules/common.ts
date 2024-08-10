@@ -20,5 +20,5 @@ export interface ResultData<T = any> {
 // ✅ 分页
 export interface PageParams {
   pageNum: number
-  pageSize: number
+  pageSize?: number
 }

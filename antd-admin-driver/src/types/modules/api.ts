@@ -20,8 +20,8 @@ export namespace IUser {
 
   // 接口返回Item类型，并不是具体某个接口，可参考这种定义方式
   export interface UserInfo {
-    _id?: string;
-    userId?: number;
+    _id: number;
+    userId: number;
     userName: string;
     userEmail?: string;
     state?: number;
@@ -33,7 +33,23 @@ export namespace IUser {
     deptId?: string;
     deptName?: string; // 部门
     userImg?: string;
-    key?: any; // react key
+  }
+
+  // 创建user接口
+  export interface CreateParams {
+    userName: string;
+    userEmail: string;
+    mobile?: string;
+    deptId: string;
+    job?: string;
+    state?: number;
+    roleList: string[];
+    userImg?: string;
+  }
+
+  // 编辑用户
+  export interface EditParams extends CreateParams {
+    userId: number;
   }
 }
 

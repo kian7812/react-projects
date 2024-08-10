@@ -8,10 +8,15 @@ function generateCreateTime() {
   return now
 }
 
+// id 递加 每次新增加
+let idNumber = 13
+
 export const users = defineMockData('users', [
   { id: 1, name: 'Danny', },
   { id: 2, name: 'Tom', },
 ])
+
+
 
 export const usersList = defineMockData('usersList', {
   page: {
@@ -21,7 +26,7 @@ export const usersList = defineMockData('usersList', {
   },
   list: [
     {
-      _id: '1',
+      _id: 1,
       userId: 1001,
       userName: 'Tom',
       userEmail: 'Tom@xx.com',
@@ -37,7 +42,7 @@ export const usersList = defineMockData('usersList', {
       createTime: generateCreateTime()
     },
     {
-      _id: '2',
+      _id: 2,
       userId: 1002,
       userName: 'Even',
       userEmail: 'Even@xx.com',
@@ -53,7 +58,7 @@ export const usersList = defineMockData('usersList', {
       createTime: generateCreateTime()
     },
     {
-      _id: '3',
+      _id: 3,
       userId: 1003,
       userName: 'Even3',
       userEmail: 'Even3@xx.com',
@@ -69,7 +74,7 @@ export const usersList = defineMockData('usersList', {
       createTime: generateCreateTime()
     },
     {
-      _id: '4',
+      _id: 4,
       userId: 1004,
       userName: 'Tom4',
       userEmail: 'Tom4@xx.com',
@@ -85,7 +90,7 @@ export const usersList = defineMockData('usersList', {
       createTime: generateCreateTime()
     },
     {
-      _id: '5',
+      _id: 5,
       userId: 1005,
       userName: 'Even5',
       userEmail: 'Even5@xx.com',
@@ -101,7 +106,7 @@ export const usersList = defineMockData('usersList', {
       createTime: generateCreateTime(),
     },
     {
-      _id: '6',
+      _id: 6,
       userId: 1006,
       userName: 'Even6',
       userEmail: 'Even6@xx.com',
@@ -117,7 +122,7 @@ export const usersList = defineMockData('usersList', {
       createTime: generateCreateTime(),
     },
     {
-      _id: '7',
+      _id: 7,
       userId: 1007,
       userName: 'Even7',
       userEmail: 'Eve7n@xx.com',
@@ -133,7 +138,7 @@ export const usersList = defineMockData('usersList', {
       createTime: generateCreateTime(),
     },
     {
-      _id: '8',
+      _id: 8,
       userId: 1008,
       userName: 'Even8',
       userEmail: 'Even8@xx.com',
@@ -149,7 +154,7 @@ export const usersList = defineMockData('usersList', {
       createTime: generateCreateTime(),
     },
     {
-      _id: '9',
+      _id: 9,
       userId: 1009,
       userName: 'Even9',
       userEmail: 'Even@xx.com',
@@ -165,7 +170,7 @@ export const usersList = defineMockData('usersList', {
       createTime: generateCreateTime(),
     },
     {
-      _id: '10',
+      _id: 10,
       userId: 1010,
       userName: 'Even10',
       userEmail: 'Even@xx.com',
@@ -181,7 +186,7 @@ export const usersList = defineMockData('usersList', {
       createTime: generateCreateTime(),
     },
     {
-      _id: '11',
+      _id: 11,
       userId: 1011,
       userName: 'Even11',
       userEmail: 'Even@xx.com',
@@ -197,7 +202,7 @@ export const usersList = defineMockData('usersList', {
       createTime: generateCreateTime(),
     },
     {
-      _id: '12',
+      _id: 12,
       userId: 1012,
       userName: 'Even11',
       userEmail: 'Even@xx.com',
@@ -213,7 +218,7 @@ export const usersList = defineMockData('usersList', {
       createTime: generateCreateTime(),
     },
     {
-      _id: '13',
+      _id: 13,
       userId: 1013,
       userName: 'Even11',
       userEmail: 'Even@xx.com',
@@ -230,3 +235,52 @@ export const usersList = defineMockData('usersList', {
     },
   ]
 })
+
+export const createOneUser = (params) => {
+  const item = {
+    _id: '1',
+    userId: 1001,
+    createId: 1,
+    userName: '',
+    userEmail: '',
+    state: 0,
+    mobile: '',
+    job: '',
+    role: 0,
+    roleList: '',
+    deptId: '',
+    deptName: '',
+    userImg: '',
+    createTime: generateCreateTime()
+  }
+
+  idNumber = idNumber + 1
+  const _id = idNumber
+  const userId = 1000 + _id
+
+  const user = {
+    ...item,
+    ...params,
+    _id,
+    userId
+  }
+
+  usersList.value.list.push(user)
+}
+
+export const editOneUser = (params) => {
+  const index = usersList.value.list.findIndex(u => Number(u.userId) === Number(params.userId))
+  const item = usersList.value.list[index]
+  usersList.value.list.splice(index, 1, {
+    ...item,
+    ...params
+  })
+}
+
+// 删除一个或多个，一般真是接口，不做真删除
+export const deleteUser = (params) => {
+  params.userIds.forEach((id) => {
+    const index = usersList.value.list.findIndex(u => Number(u.userId) === Number(id))
+    usersList.value.list.splice(index, 1)
+  })
+}

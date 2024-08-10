@@ -1,5 +1,5 @@
 import { defineMock } from 'vite-plugin-mock-dev-server'
-import { users, usersList } from '../mock/shared/database/user'
+import { users, usersList, createOneUser, editOneUser, deleteUser } from '../mock/shared/database/user'
 import { successWrap, noneUserWrap, noneTokenWrap } from '../mock/shared/utils/dataWrap'
 import { MOCK_LOCAL_API } from './shared/utils/constants'
 
@@ -65,6 +65,7 @@ export default defineMock([
       return noneTokenWrap()
     }
   },
+  // 用户列表
   {
     url: MOCK_LOCAL_API + '/users/list',
     delay: 180,
@@ -92,6 +93,72 @@ export default defineMock([
       return noneTokenWrap()
     }
   },
+  // 创建用户
+  {
+    url: MOCK_LOCAL_API + '/users/create',
+    delay: 200,
+    body({ body, query, params, headers }) {
+      const authorization = headers.authorization?.toUpperCase()
+      const user = users.value.find(u => authorization?.includes(u.name.toUpperCase()))
+
+      if (user) {
+        createOneUser(body)
+        return successWrap(true)
+      }
+
+      return noneTokenWrap()
+    }
+  },
+  // 编辑用户
+  {
+    url: MOCK_LOCAL_API + '/users/edit',
+    delay: 200,
+    body({ body, query, params, headers }) {
+      const authorization = headers.authorization?.toUpperCase()
+      const user = users.value.find(u => authorization?.includes(u.name.toUpperCase()))
+
+      if (user) {
+        editOneUser(body)
+        return successWrap(true)
+      }
+
+      return noneTokenWrap()
+    }
+  },
+  // 编辑用户
+  {
+    url: MOCK_LOCAL_API + '/users/delete',
+    delay: 200,
+    body({ body, query, params, headers }) {
+      const authorization = headers.authorization?.toUpperCase()
+      const user = users.value.find(u => authorization?.includes(u.name.toUpperCase()))
+
+      if (user) {
+        deleteUser(body)
+        return successWrap(true)
+      }
+
+      return noneTokenWrap()
+    }
+  },
+  // 图片上传
+  {
+    url: MOCK_LOCAL_API + '/users/upload22222', // 别使用了，会在内存中
+    delay: 480,
+    body({ body, query, params, headers }) {
+      const authorization = headers.authorization?.toUpperCase()
+      const user = users.value.find(u => authorization?.includes(u.name.toUpperCase()))
+
+      if (user) {
+        return successWrap({
+          files: body.file.originalFilename,
+        })
+      }
+
+      return noneTokenWrap()
+    }
+  },
+
 ])
 
 

@@ -2,12 +2,17 @@ import api from "@/api";
 import { IUser } from "@/types/modules/api";
 import { PageParams } from "@/types/modules/common";
 import { formatDate } from "@/utils/localeDate";
-import { Button, Form, Input, Select, Space, Table, TableColumnsType, TableProps, Tag } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Form, Input, message, Modal, Select, Space, Table, TableColumnsType, TableProps, Tag } from "antd";
+import { Key, useEffect, useRef, useState } from "react";
+import CreateUserDialog from "./CreateUserDialog";
+import { IAction, IModalProp } from "@/types/modal";
 
 export default function UserList() {
   const [dateSource, setDateSource] = useState<IUser.UserInfo[]>([])
   const [form] = Form.useForm();
+  const userRef: IModalProp['mRef'] = useRef()
+  const [userIds, setUserIds] = useState<number[]>([]);
+
   const [pageConf, setPageConf] = useState<{
     current: number
     pageSize: number
@@ -25,7 +30,7 @@ export default function UserList() {
     api.getUserList({
       ...values,
       pageNum: params.pageNum,
-      pageSize: params.pageSize,
+      pageSize: params.pageSize || pageConf.pageSize,
     }).then((res) => {
       setDateSource(res.list)
       setPageConf({
@@ -41,7 +46,6 @@ export default function UserList() {
     // 初始分页
     getUserList({
       pageNum: 1,
-      pageSize: pageConf.pageSize,
     })
   }, [])
 
@@ -50,7 +54,6 @@ export default function UserList() {
   const handleSearch = () => {
     getUserList({
       pageNum: 1,
-      pageSize: pageConf.pageSize,
     })
   }
 
@@ -63,16 +66,59 @@ export default function UserList() {
 
     getUserList({
       pageNum: page,
-      pageSize: pageConf.pageSize,
     })
   }
 
   // 重置表单
-  const handleReset = (params) => {
+  const handleReset = () => {
     form.resetFields()
     handleSearch()
   }
 
+  // 创建
+  const handleCreate = () => {
+    userRef.current?.open('create')
+  }
+
+  // 编辑
+  const handleEdit = (record: IUser.UserInfo) => {
+    userRef.current?.open('edit', record)
+  }
+
+  // 删除
+  const handleDel = (userId: number) => {
+    Modal.confirm({
+      title: '删除确认',
+      content: <span>确认删除该用户吗</span>,
+      onOk: () => {
+        delUserReq([userId])
+      }
+    })
+  }
+
+  const batchDel = () => {
+    if (userIds.length === 0) {
+      message.error('请选择要删除用户')
+      return
+    }
+
+    Modal.confirm({
+      title: '删除确认',
+      content: <span>确认删除该批用户吗</span>,
+      onOk: () => {
+        delUserReq(userIds)
+      }
+    })
+  }
+
+  // 删除用户 接口
+  const delUserReq = (ids: number[]) => {
+    api.delUser({ userIds: ids }).then(() => {
+      message.success('删除成功')
+      setUserIds([]) // 删除完重置
+      handleSearch()
+    })
+  }
 
   // TableColumnsType ✅ 行值就能.出来
   const columns: TableColumnsType<IUser.UserInfo> = [
@@ -117,6 +163,8 @@ export default function UserList() {
       dataIndex: 'createTime',
       key: 'createTime',
       render(createTime: string | number) {
+        // ✅dataIndex 列的属性，render第一个参数是该属性值
+        // 第二个参数是record行数据
         return formatDate(createTime)
       }
     },
@@ -124,15 +172,14 @@ export default function UserList() {
       title: '操作',
       dataIndex: 'action',
       key: 'action',
-      render: () => (
+      render: (val, record: IUser.UserInfo) => (
         <Space>
-          <Button type="text">编辑</Button>
-          <Button type="text" danger>删除</Button>
+          <Button type="text" onClick={() => { handleEdit(record) }}>编辑</Button>
+          <Button type="text" danger onClick={() => { handleDel(record.userId) }}>删除</Button>
         </Space>
       ),
     },
   ];
-
 
   return (
     <div className="userList">
@@ -153,14 +200,14 @@ export default function UserList() {
           <Select style={{ width: 120 }}>
             <Select.Option value={0}>所有</Select.Option>
             <Select.Option value={1}>在职</Select.Option>
-            <Select.Option value={2}>试用期</Select.Option>
-            <Select.Option value={3}>离职</Select.Option>
+            <Select.Option value={2}>离职</Select.Option>
+            <Select.Option value={3}>试用期</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item >
           <Space>
             <Button type="primary" onClick={handleSearch}>搜索</Button>
-            <Button type="primary" onClick={handleReset}>重置</Button>
+            <Button onClick={handleReset}>重置</Button>
           </Space>
         </Form.Item>
       </Form>
@@ -169,8 +216,8 @@ export default function UserList() {
         <div className="headerWrapper">
           <div className="title">用户列表</div>
           <div className="action">
-            <Button>新增</Button>
-            <Button>批量删除</Button>
+            <Button type="primary" onClick={handleCreate}>新增</Button>
+            <Button danger onClick={batchDel}>批量删除</Button>
           </div>
         </div>
 
@@ -181,7 +228,11 @@ export default function UserList() {
             bordered
             rowKey="userId"
             rowSelection={{
-              type: 'checkbox'
+              type: 'checkbox',
+              selectedRowKeys: userIds, // ✅目的作为受控组件
+              onChange: (selectedRowKeys: Key[]) => {
+                setUserIds(selectedRowKeys as number[])
+              }
             }}
             pagination={{
               position: ['bottomRight'],
@@ -199,6 +250,8 @@ export default function UserList() {
           />
         </div>
       </div>
+
+      <CreateUserDialog mRef={userRef} update={handleSearch} />
     </div>
   )
 };
