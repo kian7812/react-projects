@@ -111,3 +111,39 @@ export namespace IDept {
     _id: number
   }
 }
+
+// 菜单
+export namespace IMenu {
+  export interface Params {
+    menuName: string
+    menuState: number
+  }
+  // 创建
+  export interface CreateParams {
+    menuName: string // 菜单名称
+    icon?: string // 菜单图标
+    menuType: number // 1: 菜单 2: 按钮 3: 页面
+    menuState: number // 1:正常 2: 停用
+    menuCode?: string // 按钮权限标识，只有类型2按钮有权限标识，标记权限：查看、新增、编辑、删除、批量删除
+    parentId?: number // 父级菜单id
+    path?: string // 菜单路径
+    component?: string // 组件名称
+    orderBy: number // 排序
+  }
+  // Item
+  export interface MenuItem extends CreateParams {
+    _id: number;
+    createTime: string
+    buttons?: MenuItem[] // 直接用✅
+    children?: MenuItem[]
+  }
+
+  // 编辑
+  export interface EditParams extends CreateParams {
+    _id: number
+  }
+  // 删除
+  export interface DeleteParams {
+    _id: number
+  }
+}

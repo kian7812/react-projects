@@ -9,6 +9,7 @@ import Dashboard from '@/views/Dashboard';
 import UserList from '@/views/System/User/UserList';
 import UserList2 from '@/views/System/User/UserList2';
 import DeptList from '@/views/System/Dept/DeptList';
+import MenuList from '@/views/System/Menu/MenuList';
 
 const router = [
   {
@@ -35,13 +36,17 @@ const router = [
         element: <UserList />
       },
       {
-        // 使用 useAntdTable
+        // 使用了 useAntdTable
         path: '/userList2',
         element: <UserList2 />
       },
       {
         path: '/deptList',
         element: <DeptList />
+      },
+      {
+        path: '/menuList',
+        element: <MenuList />
       },
     ]
   },

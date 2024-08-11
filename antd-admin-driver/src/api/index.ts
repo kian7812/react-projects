@@ -1,5 +1,5 @@
 import request from "@/utils/request";
-import { ILogin, IUser, IDashBoard, IDept } from '@/types/modules/api'
+import { ILogin, IUser, IDashBoard, IDept, IMenu } from '@/types/modules/api'
 import { ResultData } from "@/types/modules/common";
 
 export default {
@@ -7,7 +7,7 @@ export default {
   login(params: ILogin.params) {
     return request.post('/users/login', params)
   },
-  // --用户管理--
+  // 【用户管理】
   // 获取用户信息
   getUserInfo() {
     return request.get<IUser.UserInfo>('/users/getUserInfo')
@@ -37,7 +37,7 @@ export default {
     return request.post('/users/delete', params)
   },
 
-  // --部门管理--
+  //【部门管理】
   // 部门列表
   getDeptList(params?: IDept.Params) {
     return request.get<IDept.DeptItem[]>('/dept/list', params)
@@ -53,5 +53,23 @@ export default {
   // 删除
   deleteDept(params: IDept.DeleteParams) {
     return request.post('/dept/delete', params)
+  },
+
+  //【菜单管理】
+  // 列表
+  getMenuList(params?: IMenu.Params) {
+    return request.get<IMenu.MenuItem[]>('/menu/list', params)
+  },
+  // 创建
+  createMenu(params: IMenu.CreateParams) {
+    return request.post('/menu/create', params)
+  },
+  // 编辑
+  editMenu(params: IMenu.EditParams) {
+    return request.post('/menu/edit', params)
+  },
+  // 删除
+  deleteMenu(params: IMenu.DeleteParams) {
+    return request.post('/menu/delete', params)
   },
 }
