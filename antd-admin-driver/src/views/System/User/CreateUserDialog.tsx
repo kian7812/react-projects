@@ -125,7 +125,7 @@ export default function CreateUser(props: IModalProp) {
           name="userName"
           rules={[
             { required: true, message: '请输入内容' },
-            { min: 5, max: 12, message: '用户名称最小5个字符，最大12个字符' },
+            { min: 2, max: 12, message: '用户名称最小5个字符，最大12个字符' },
           ]}
         >
           <Input placeholder="请输入用户名称"></Input>
@@ -136,7 +136,7 @@ export default function CreateUser(props: IModalProp) {
           rules={[
             { required: true, message: '请输入内容' },
             { type: 'email', message: '请输入正确的邮箱' },
-            { pattern: /^\w+@123.com$/, message: '邮箱必须以@123.com结尾' },
+            // { pattern: /^\w+@123.com$/, message: '邮箱必须以@123.com结尾' }, // 先注释了
           ]}
         >
           <Input placeholder="请输入用户邮箱" disabled={action === 'edit'}></Input>
@@ -145,8 +145,8 @@ export default function CreateUser(props: IModalProp) {
           label="手机号"
           name="mobile"
           rules={[
-            { len: 11, message: '手机号必须为11位数字' },
-            { pattern: /1[1-9]\d{9}/, message: '手机号必须为1开头的11位数字' },
+            // { len: 11, message: '手机号必须为11位数字' }, // 先注释了
+            // { pattern: /1[1-9]\d{9}/, message: '手机号必须为1开头的11位数字' }, // 先注释了
           ]}
         >
           <Input type="number" placeholder="请输入手机号"></Input>

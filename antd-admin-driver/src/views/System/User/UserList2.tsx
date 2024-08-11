@@ -8,76 +8,50 @@ import CreateUserDialog from "./CreateUserDialog";
 import { IAction, IModalProp } from "@/types/modal";
 import { useAntdTable } from "ahooks";
 
+// ✅使用 useAntdTable 实现表格查询分页
+
+// 固定的返回参数接口结构
+interface Result {
+  total: number;
+  list: IUser.UserInfo[];
+}
+const getTableData = (
+  { current, pageSize }: { current: number, pageSize: number }, // 第一个参数是分页
+  formData: IUser.Params // // 第二个参数是表单
+): Promise<Result> => {
+  return api.getUserList({
+    ...formData,
+    pageNum: current,
+    pageSize: pageSize,
+  }).then((res) => {
+    return {
+      total: res.page.total,
+      list: res.list
+    }
+  })
+};
+
 export default function UserList() {
-  const [dateSource, setDateSource] = useState<IUser.UserInfo[]>([])
   const [form] = Form.useForm();
   const userRef: IModalProp['mRef'] = useRef()
   const [userIds, setUserIds] = useState<number[]>([]);
 
-  const [pageConf, setPageConf] = useState<{
-    current: number
-    pageSize: number
-    total: number
-  }>({
-    current: 1,
-    pageSize: 5,
-    total: 0
+  // 使用 useAntdTable
+  // table 配置项 pagination 和 dataSource 使用 tableProps 代替
+  // 搜索和重置 使用 search 方法
+  const { tableProps, search } = useAntdTable(getTableData, {
+    form, // 用来获取表单参数
+    defaultPageSize: 4, // 默认 pageSize
   })
-
-
-  // useAntdTable()
-
-
-  // 用户信息列表
-  const getUserList = (params: PageParams) => {
-    const values = form.getFieldsValue() // getFieldsValue 还有 单个的 getFieldValue
-
-    api.getUserList({
-      ...values,
-      pageNum: params.pageNum,
-      pageSize: params.pageSize || pageConf.pageSize,
-    }).then((res) => {
-      setDateSource(res.list)
-      setPageConf({
-        ...pageConf,
-        current: res.page.pageNum,
-        pageSize: res.page.pageSize,
-        total: res.page.total,
-      })
-    })
-  }
-
-  useEffect(() => {
-    // 初始分页
-    getUserList({
-      pageNum: 1,
-    })
-  }, [])
-
 
   // 搜索
   const handleSearch = () => {
-    getUserList({
-      pageNum: 1,
-    })
-  }
-
-  // 分页改变
-  const pageChange = (page: number) => {
-    setPageConf({
-      ...pageConf,
-      current: page,
-    })
-
-    getUserList({
-      pageNum: page,
-    })
+    search.submit()
   }
 
   // 重置表单
   const handleReset = () => {
-    form.resetFields()
-    handleSearch()
+    search.reset()
   }
 
   // 创建
@@ -101,6 +75,7 @@ export default function UserList() {
     })
   }
 
+  // 批量删除
   const batchDel = () => {
     if (userIds.length === 0) {
       message.error('请选择要删除用户')
@@ -121,7 +96,7 @@ export default function UserList() {
     api.delUser({ userIds: ids }).then(() => {
       message.success('删除成功')
       setUserIds([]) // 删除完重置
-      handleSearch()
+      handleReset()
     })
   }
 
@@ -228,7 +203,6 @@ export default function UserList() {
 
         <div className="tableWrapper">
           <Table
-            dataSource={dateSource}
             columns={columns}
             bordered
             rowKey="userId"
@@ -239,24 +213,15 @@ export default function UserList() {
                 setUserIds(selectedRowKeys as number[])
               }
             }}
-            pagination={{
-              position: ['bottomRight'],
-              current: pageConf.current,
-              pageSize: pageConf.pageSize,
-              total: pageConf.total,
-              showQuickJumper: true,
-              showTotal(total) {
-                return `总共${total}条`
-              },
-              onChange(page) {
-                pageChange(page)
-              }
-            }}
+            {...tableProps}
           />
         </div>
       </div>
 
-      <CreateUserDialog mRef={userRef} update={handleSearch} />
+      <CreateUserDialog
+        mRef={userRef}
+        update={handleReset}
+      />
     </div>
   )
 };

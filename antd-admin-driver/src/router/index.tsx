@@ -7,6 +7,7 @@ import Welcome from '@/views/Welcome';
 import DefaultLayout from '@/layout/DefaultLayout';
 import Dashboard from '@/views/Dashboard';
 import UserList from '@/views/System/User/UserList';
+import UserList2 from '@/views/System/User/UserList2';
 
 const router = [
   {
@@ -31,6 +32,11 @@ const router = [
       {
         path: '/userList',
         element: <UserList />
+      },
+      // 使用 useAntdTable
+      {
+        path: '/userList2',
+        element: <UserList2 />
       }
     ]
   },
