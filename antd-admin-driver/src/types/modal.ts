@@ -1,12 +1,17 @@
 import { MutableRefObject } from "react"
-import { IUser } from "./modules/api"
 
 export type IAction = 'create' | 'edit' | 'delete'
 
-export interface IModalProp {
+export interface IModalProp<T = any> {
   mRef: MutableRefObject<
-    { open: (type: IAction, data?: IUser.UserInfo) => void } // ref 对外的方法
+    { open: (type: IAction, data?: T) => void } // ref 对外的方法
     | undefined
   >
+  update: () => void
+}
+
+export interface IModalProp2<T = any> {
+  visible: boolean
+  getModalParams: () => { type: IAction, data?: T }
   update: () => void
 }

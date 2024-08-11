@@ -8,6 +8,7 @@ import DefaultLayout from '@/layout/DefaultLayout';
 import Dashboard from '@/views/Dashboard';
 import UserList from '@/views/System/User/UserList';
 import UserList2 from '@/views/System/User/UserList2';
+import DeptList from '@/views/System/Dept/DeptList';
 
 const router = [
   {
@@ -33,11 +34,15 @@ const router = [
         path: '/userList',
         element: <UserList />
       },
-      // 使用 useAntdTable
       {
+        // 使用 useAntdTable
         path: '/userList2',
         element: <UserList2 />
-      }
+      },
+      {
+        path: '/deptList',
+        element: <DeptList />
+      },
     ]
   },
   // ✅路由不存在

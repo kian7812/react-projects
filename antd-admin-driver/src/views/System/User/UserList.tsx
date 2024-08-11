@@ -163,7 +163,7 @@ export default function UserList() {
       dataIndex: 'createTime',
       key: 'createTime',
       render(createTime: string | number) {
-        // ✅dataIndex 列的属性，render第一个参数是该属性值
+        // ✅dataIndex 列的属性即接口字段，render第一个参数是该属性值
         // 第二个参数是record行数据
         return formatDate(createTime)
       }
@@ -186,7 +186,6 @@ export default function UserList() {
       <Form
         className="searchForm"
         form={form}
-        name="searchForm"
         layout="inline"
         initialValues={{ state: 0 }}
       >

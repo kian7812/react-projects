@@ -107,7 +107,8 @@ export default function CreateUser(props: IModalProp) {
     }
   };
   return (
-    <Modal title='创建用户'
+    <Modal
+      title={action === 'create' ? '创建用户' : '编辑用户'}
       width={600}
       open={visible}
       onOk={handleSubmit}

@@ -1,6 +1,7 @@
 import { PageParams } from './common'
 
 // ✅使用命名空间
+// Tip✅ 定义列表类型时，直接定义Item就行，Item[]
 
 export namespace ILogin {
   export interface params {
@@ -9,15 +10,14 @@ export namespace ILogin {
   }
 }
 
+// 用户管理
 export namespace IUser {
-
   // 接口入参类型，并不是具体某个接口，可参考这种定义方式
   export interface Params extends PageParams {
     userId?: number;
     userName?: string
     state?: number
   }
-
   // 接口返回Item类型，并不是具体某个接口，可参考这种定义方式
   export interface UserInfo {
     _id: number;
@@ -30,11 +30,10 @@ export namespace IUser {
     role?: number;
     roleList?: string;
     createId?: number;
-    deptId?: string;
+    deptId?: string; // 部门id
     deptName?: string; // 部门
     userImg?: string;
   }
-
   // 创建user接口
   export interface CreateParams {
     userName: string;
@@ -46,7 +45,6 @@ export namespace IUser {
     roleList: string[];
     userImg?: string;
   }
-
   // 编辑用户
   export interface EditParams extends CreateParams {
     userId: number;
@@ -80,5 +78,36 @@ export namespace IDashBoard {
       name: string
       value: number[]
     }
+  }
+}
+
+// 部门管理
+export namespace IDept {
+  export interface Params {
+    deptName?: string
+  }
+  export interface DeptItem {
+    _id: number;
+    parentId?: number
+    createTime: string
+    updateTime: string
+    deptName: string;
+    userName: string
+    children: DeptItem[] // 直接使用✅
+  }
+
+  // 创建
+  export interface CreateParams {
+    parentId?: number
+    deptName: string
+    userName: string
+  }
+  // 编辑
+  export interface EditParams extends CreateParams {
+    _id: number
+  }
+  // 删除
+  export interface DeleteParams {
+    _id: number
   }
 }

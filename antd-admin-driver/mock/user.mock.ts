@@ -93,6 +93,21 @@ export default defineMock([
       return noneTokenWrap()
     }
   },
+  // 全部用户列表
+  {
+    url: MOCK_LOCAL_API + '/users/all/list',
+    delay: 180,
+    body({ body, query, params, headers }) {
+      const authorization = headers.authorization?.toUpperCase()
+      const user = users.value.find(u => authorization?.includes(u.name.toUpperCase()))
+
+      if (user) {
+        return successWrap(usersList.value.list)
+      }
+
+      return noneTokenWrap()
+    }
+  },
   // 创建用户
   {
     url: MOCK_LOCAL_API + '/users/create',

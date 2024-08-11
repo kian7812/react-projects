@@ -238,7 +238,7 @@ export const usersList = defineMockData('usersList', {
 
 export const createOneUser = (params) => {
   const item = {
-    _id: '1',
+    _id: 1,
     userId: 1001,
     createId: 1,
     userName: '',
