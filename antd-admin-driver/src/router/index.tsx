@@ -6,7 +6,7 @@ import NotFound from '@/views/404';
 import Welcome from '@/views/Welcome';
 import DefaultLayout from '@/layout/DefaultLayout';
 import Dashboard from '@/views/Dashboard';
-import UserList from '@/views/System/UserList';
+import UserList from '@/views/System/User/UserList';
 
 const router = [
   {
