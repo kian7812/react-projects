@@ -10,6 +10,7 @@ import UserList from '@/views/System/User/UserList';
 import UserList2 from '@/views/System/User/UserList2';
 import DeptList from '@/views/System/Dept/DeptList';
 import MenuList from '@/views/System/Menu/MenuList';
+import AuthLoader from './AuthLoader';
 
 const router = [
   {
@@ -22,6 +23,9 @@ const router = [
   },
   {
     element: <DefaultLayout />,
+    // 路由拦截器，路由中间件
+    id: 'layout',
+    loader: AuthLoader,
     children: [
       {
         path: '/welcome',
@@ -67,5 +71,5 @@ const router = [
 //   return useRoutes(router)
 // }
 
-// 推荐使用 api 定义路由，它支持loader，路由拦截
+// 推荐使用 api 定义路由，✅它支持loader，路由拦截
 export default createBrowserRouter(router)

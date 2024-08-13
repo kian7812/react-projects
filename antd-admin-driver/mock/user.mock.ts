@@ -2,6 +2,8 @@ import { defineMock } from 'vite-plugin-mock-dev-server'
 import { users, usersList, createOneUser, editOneUser, deleteUser } from '../mock/shared/database/user'
 import { successWrap, noneUserWrap, noneTokenWrap } from '../mock/shared/utils/dataWrap'
 import { MOCK_LOCAL_API } from './shared/utils/constants'
+import { validateAuth } from './shared/utils/middleware'
+import { permissionList } from './shared/database/menu'
 
 export default defineMock([
   {
@@ -44,6 +46,16 @@ export default defineMock([
       }
 
       return noneTokenWrap()
+    }
+  },
+  // 菜单权限列表
+  {
+    url: MOCK_LOCAL_API + '/users/getPermissionList',
+    delay: 180,
+    body({ body, query, params, headers }) {
+      return validateAuth(headers, () => {
+        return permissionList.value
+      })
     }
   },
   {

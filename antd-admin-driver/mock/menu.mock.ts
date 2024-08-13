@@ -4,6 +4,7 @@ import { users } from './shared/database/user'
 import { menuList, createMenu, editMenu, deleteMenu } from './shared/database/menu'
 import { successWrap, noneUserWrap, noneTokenWrap } from './shared/utils/dataWrap'
 import { MOCK_LOCAL_API } from './shared/utils/constants'
+import { validateAuth } from './shared/utils/middleware'
 
 export default defineMock([
   // 列表
@@ -11,15 +12,9 @@ export default defineMock([
     url: MOCK_LOCAL_API + '/menu/list',
     delay: 180,
     body({ body, query, params, headers }) {
-      const authorization = headers.authorization?.toUpperCase()
-      const user = users.value.find(u => authorization?.includes(u.name.toUpperCase()))
-
-      // 没做搜索
-      if (user) {
-        return successWrap(menuList.value.list)
-      }
-
-      return noneTokenWrap()
+      return validateAuth(headers, () => {
+        return menuList.value.list
+      })
     }
   },
   // 创建
@@ -27,15 +22,10 @@ export default defineMock([
     url: MOCK_LOCAL_API + '/menu/create',
     delay: 200,
     body({ body, query, params, headers }) {
-      const authorization = headers.authorization?.toUpperCase()
-      const user = users.value.find(u => authorization?.includes(u.name.toUpperCase()))
-
-      if (user) {
+      validateAuth(headers, () => {
         createMenu(body)
-        return successWrap(true)
-      }
-
-      return noneTokenWrap()
+        return true
+      })
     }
   },
   // 编辑
@@ -43,15 +33,10 @@ export default defineMock([
     url: MOCK_LOCAL_API + '/menu/edit',
     delay: 200,
     body({ body, query, params, headers }) {
-      const authorization = headers.authorization?.toUpperCase()
-      const user = users.value.find(u => authorization?.includes(u.name.toUpperCase()))
-
-      if (user) {
+      validateAuth(headers, () => {
         editMenu(body)
-        return successWrap(true)
-      }
-
-      return noneTokenWrap()
+        return true
+      })
     }
   },
   // 删除
@@ -59,18 +44,12 @@ export default defineMock([
     url: MOCK_LOCAL_API + '/menu/delete',
     delay: 200,
     body({ body, query, params, headers }) {
-      const authorization = headers.authorization?.toUpperCase()
-      const user = users.value.find(u => authorization?.includes(u.name.toUpperCase()))
-
-      if (user) {
+      validateAuth(headers, () => {
         deleteMenu(body)
-        return successWrap(true)
-      }
-
-      return noneTokenWrap()
+        return true
+      })
     }
   },
-
 ])
 
 

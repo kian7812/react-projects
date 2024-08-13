@@ -47,12 +47,18 @@ export default function MenuList() {
     menuRef.current?.open('edit', record)
   }
   // 删除
-  const handleDelete = (id: number) => {
+  const handleDelete = (record: IMenu.MenuItem) => {
+    const text = {
+      1: '菜单',
+      2: '按钮',
+      3: '页面',
+    }[record.menuType]
+
     Modal.confirm({
       title: '删除确认',
-      content: <span>确认删除该菜单吗</span>,
+      content: <span>{`确认要删除该${text}吗？`}</span>,
       onOk: () => {
-        reqDelete(id)
+        reqDelete(record._id)
       }
     })
   }
@@ -121,7 +127,7 @@ export default function MenuList() {
           <Space>
             <Button type='text' onClick={() => handleSubCreate(record._id)}>新增</Button>
             <Button type='text' onClick={() => handleEdit(record)}>编辑</Button>
-            <Button type='text' danger onClick={() => handleDelete(record._id)}>删除</Button>
+            <Button type='text' danger onClick={() => handleDelete(record)}>删除</Button>
           </Space>
         )
       }

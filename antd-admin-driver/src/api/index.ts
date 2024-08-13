@@ -12,6 +12,10 @@ export default {
   getUserInfo() {
     return request.get<IUser.UserInfo>('/users/getUserInfo')
   },
+  // 获取权限列表
+  getPermissionList() {
+    return request.get<{ buttonList: string[], menuList: IMenu.MenuItem[] }>('/users/getPermissionList')
+  },
   // 获取报表信息
   getReportData() {
     return request.get<IDashBoard.reportData>('/order/dashboard/getReportData')
