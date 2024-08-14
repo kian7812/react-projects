@@ -130,11 +130,14 @@ export namespace IMenu {
     component?: string // 组件名称
     orderBy: number // 排序
   }
-  // Item
+  /**
+   * Item 说明
+   * 有 buttons 且 有 path 说明是末及菜单了
+   */
   export interface MenuItem extends CreateParams {
     _id: number;
     createTime: string
-    buttons?: MenuItem[] // 直接用✅
+    buttons?: MenuItem[]
     children?: MenuItem[]
   }
 

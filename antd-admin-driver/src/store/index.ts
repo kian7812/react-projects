@@ -10,7 +10,7 @@ interface IState {
 export const useUserInfoStore = create<IState>((set) => ({
   token: '',
   userInfo: {
-    _id: '',
+    _id: 0,
     userId: 0,
     userName: '',
     userEmail: '',

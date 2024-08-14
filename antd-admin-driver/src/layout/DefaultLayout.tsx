@@ -3,7 +3,7 @@ import { Layout, Menu, theme, Watermark } from 'antd';
 import NavHeader from '@/components/NavHeader';
 import NavFooter from '@/components/NavFooter';
 import SideMenu from '@/components/SideMenu';
-import { Outlet, useRouteLoaderData } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import styles from './index.module.less'
 import api from '@/api';
 import storage from '@/utils/storage';
@@ -31,9 +31,7 @@ const App: React.FC = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-  // 路由拦截
-  const data = useRouteLoaderData('layout')
-  console.log(123, data)
+
 
 
   return (
