@@ -11,6 +11,7 @@ import UserList2 from '@/views/System/User/UserList2';
 import DeptList from '@/views/System/Dept/DeptList';
 import MenuList from '@/views/System/Menu/MenuList';
 import AuthLoader from './AuthLoader';
+import RoleList from '@/views/System/Role/RoleList';
 
 const router = [
   {
@@ -51,6 +52,10 @@ const router = [
       {
         path: '/menuList',
         element: <MenuList />
+      },
+      {
+        path: '/roleList',
+        element: <RoleList />
       },
     ]
   },

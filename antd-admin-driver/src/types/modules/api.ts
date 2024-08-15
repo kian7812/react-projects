@@ -135,18 +135,64 @@ export namespace IMenu {
    * 有 buttons 且 有 path 说明是末及菜单了
    */
   export interface MenuItem extends CreateParams {
-    _id: number;
+    _id: string;
     createTime: string
     buttons?: MenuItem[]
     children?: MenuItem[]
+    key: string // 只用于角色TreeData
   }
 
   // 编辑
   export interface EditParams extends CreateParams {
-    _id: number
+    _id: string
   }
   // 删除
   export interface DeleteParams {
-    _id: number
+    _id: string
+  }
+}
+
+
+
+// 角色
+export namespace IRole {
+  // 查询
+  export interface Params extends PageParams {
+    roleName?: string
+  }
+  // 创建
+  export interface CreateParams {
+    roleName?: string
+    remark?: string
+  }
+  // Item
+  export interface RoleItem extends CreateParams {
+    _id: string;
+    createTime: string
+    updateTime: string
+    permissionList: {
+      checkedKeys: string[]
+      halfCheckedKeys: string[]
+    }
+  }
+  // 编辑
+  export interface EditParams extends CreateParams {
+    _id: string
+  }
+  // 删除
+  export interface DeleteParams {
+    _id: string
+  }
+  // Permission
+  export interface Permission {
+    _id: string;
+    permissionList: {
+      // 用于Tree回显，选中的都是最末端，不包含父级的，在Tree组件里，所有子集全选父级自动勾选
+      // 默认末级都是按钮类型了，根据按钮类型做判断，严谨吗，如果没有查看、操作编辑呢
+      checkedKeys: string[]
+      // 用于菜单列表，父级菜单
+      halfCheckedKeys: string[]
+      //  角色 checkedKeys、halfCheckedKeys 和 菜单 _id 一样 
+    }
   }
 }

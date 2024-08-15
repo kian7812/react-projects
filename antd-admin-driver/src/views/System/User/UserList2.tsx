@@ -1,14 +1,14 @@
 import api from "@/api";
 import { IUser } from "@/types/modules/api";
-import { PageParams } from "@/types/modules/common";
 import { formatDate } from "@/utils/localeDate";
-import { Button, Form, Input, message, Modal, Select, Space, Table, TableColumnsType, TableProps, Tag } from "antd";
+import { Button, Form, Input, Modal, Select, Space, Table, TableColumnsType, TableProps, Tag } from "antd";
 import { Key, useEffect, useRef, useState } from "react";
 import CreateUserDialog from "./CreateUserDialog";
 import { IAction, IModalProp } from "@/types/modal";
 import { useAntdTable } from "ahooks";
+import { message } from '@/components/AntdGlobal'
 
-// ✅使用 useAntdTable 实现表格查询分页
+// ✅使用 ahooks 的 useAntdTable 实现表格查询分页
 
 // 固定的返回参数接口结构
 interface Result {

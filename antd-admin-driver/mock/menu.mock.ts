@@ -22,7 +22,7 @@ export default defineMock([
     url: MOCK_LOCAL_API + '/menu/create',
     delay: 200,
     body({ body, query, params, headers }) {
-      validateAuth(headers, () => {
+      return validateAuth(headers, () => {
         createMenu(body)
         return true
       })
@@ -33,7 +33,7 @@ export default defineMock([
     url: MOCK_LOCAL_API + '/menu/edit',
     delay: 200,
     body({ body, query, params, headers }) {
-      validateAuth(headers, () => {
+      return validateAuth(headers, () => {
         editMenu(body)
         return true
       })
@@ -44,7 +44,7 @@ export default defineMock([
     url: MOCK_LOCAL_API + '/menu/delete',
     delay: 200,
     body({ body, query, params, headers }) {
-      validateAuth(headers, () => {
+      return validateAuth(headers, () => {
         deleteMenu(body)
         return true
       })

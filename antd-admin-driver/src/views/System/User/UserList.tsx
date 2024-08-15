@@ -2,10 +2,11 @@ import api from "@/api";
 import { IUser } from "@/types/modules/api";
 import { PageParams } from "@/types/modules/common";
 import { formatDate } from "@/utils/localeDate";
-import { Button, Form, Input, message, Modal, Select, Space, Table, TableColumnsType, TableProps, Tag } from "antd";
+import { Button, Form, Input, Modal, Select, Space, Table, TableColumnsType, TableProps, Tag } from "antd";
 import { Key, useEffect, useRef, useState } from "react";
 import CreateUserDialog from "./CreateUserDialog";
 import { IAction, IModalProp } from "@/types/modal";
+import { message } from '@/components/AntdGlobal'
 
 export default function UserList() {
   const [dateSource, setDateSource] = useState<IUser.UserInfo[]>([])

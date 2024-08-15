@@ -801,7 +801,7 @@ export const menuList = defineMockData('menuList', {
 // 创建
 export const createMenu = params => {
   const item = {
-    _id: '655db45ff10762608048caec',
+    _id: '',
     menuType: 1,
     menuName: '',
     path: '',
@@ -829,7 +829,7 @@ export const createMenu = params => {
 // 编辑
 export const editMenu = params => {
   const index = menuList.value.list.findIndex(
-    o => Number(o._id) === Number(params._id),
+    o => (o._id) === (params._id),
   );
   const item = menuList.value.list[index];
   menuList.value.list.splice(index, 1, {
@@ -841,7 +841,7 @@ export const editMenu = params => {
 // 删除
 export const deleteMenu = params => {
   const index = menuList.value.list.findIndex(
-    o => Number(o._id) === Number(params._id),
+    o => (o._id) === (params._id),
   );
   menuList.value.list.splice(index, 1);
 };
