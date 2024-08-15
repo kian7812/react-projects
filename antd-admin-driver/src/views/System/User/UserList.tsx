@@ -7,6 +7,7 @@ import { Key, useEffect, useRef, useState } from "react";
 import CreateUserDialog from "./CreateUserDialog";
 import { IAction, IModalProp } from "@/types/modal";
 import { message } from '@/components/AntdGlobal'
+import AuthButton from "@/components/AuthButton";
 
 export default function UserList() {
   const [dateSource, setDateSource] = useState<IUser.UserInfo[]>([])
@@ -216,7 +217,8 @@ export default function UserList() {
         <div className="headerWrapper">
           <div className="title">用户列表</div>
           <div className="action">
-            <Button type="primary" onClick={handleCreate}>新增</Button>
+            {/* <AuthButton auth='create313' type="primary" onClick={handleCreate}>新增</AuthButton> */}
+            <AuthButton auth='user@create' type="primary" onClick={handleCreate}>新增</AuthButton>
             <Button danger onClick={batchDel}>批量删除</Button>
           </div>
         </div>

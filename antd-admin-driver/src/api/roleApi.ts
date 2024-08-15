@@ -9,6 +9,10 @@ export default {
   getRoleList(params?: IRole.Params) {
     return request.get<ResultData<IRole.RoleItem>>('/role/list', params)
   },
+  // 所有角色列表
+  getAllRoleList() {
+    return request.get<IRole.RoleItem[]>('/role/all/list')
+  },
   // 创建
   createRole(params: IRole.CreateParams) {
     return request.post('/role/create', params)

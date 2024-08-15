@@ -846,7 +846,7 @@ export const deleteMenu = params => {
   menuList.value.list.splice(index, 1);
 };
 
-// 菜单权限列表 permissionList
+// 菜单权限列表 permissionList 并没有 和 角色关联
 export const permissionList = defineMockData('permissionList', {
   menuList: [
     {

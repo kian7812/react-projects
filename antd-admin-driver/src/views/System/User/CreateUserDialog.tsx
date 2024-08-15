@@ -1,17 +1,41 @@
-import { Form, GetProp, Input, Modal, Select, Upload, UploadProps } from "antd";
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
-import { useImperativeHandle, useState } from "react";
-import storage from "@/utils/storage";
-import { message } from '@/components/AntdGlobal'
-import { IAction, IModalProp } from "@/types/modal";
-import { IUser } from "@/types/modules/api";
-import api from "@/api";
+import {
+  Form,
+  GetProp,
+  Input,
+  Modal,
+  Select,
+  TreeSelect,
+  Upload,
+  UploadProps,
+} from 'antd';
+import {
+  LoadingOutlined,
+  PlusOutlined,
+} from '@ant-design/icons';
+import {
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from 'react';
+import storage from '@/utils/storage';
+import { message } from '@/components/AntdGlobal';
+import { IAction, IModalProp } from '@/types/modal';
+import { IDept, IRole, IUser } from '@/types/modules/api';
+import api from '@/api';
+import roleApi from '@/api/roleApi';
 
-type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
+type FileType = Parameters<
+  GetProp<UploadProps, 'beforeUpload'>
+>[0];
 
-const getBase64 = (img: FileType, callback: (url: string) => void) => {
+const getBase64 = (
+  img: FileType,
+  callback: (url: string) => void,
+) => {
   const reader = new FileReader();
-  reader.addEventListener('load', () => callback(reader.result as string));
+  reader.addEventListener('load', () =>
+    callback(reader.result as string),
+  );
   reader.readAsDataURL(img);
 };
 
@@ -20,60 +44,82 @@ export default function CreateUser(props: IModalProp) {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState<IAction>('create');
-  const [form] = Form.useForm()
-  const token = storage.get('token')
+  const [deptList, setDeptList] = useState<
+    IDept.DeptItem[]
+  >([]);
+  const [roleList, setRoleList] = useState<
+    IRole.RoleItem[]
+  >([]);
+  const [form] = Form.useForm();
+  const token = storage.get('token');
 
+  // 获取部门列表
+  const getDeptList = async () => {
+    const list = await api.getDeptList();
+    setDeptList(list);
+  };
+  // 获取所有角色列表
+  const getAllRoleList = async () => {
+    const list = await roleApi.getAllRoleList();
+    setRoleList(list);
+  };
+
+  useEffect(() => {
+    getDeptList();
+    getAllRoleList();
+  }, []);
 
   // react文档不推荐这样open modal 而且 文档还是和forwardRef一起使用
   useImperativeHandle(props.mRef, () => {
     return {
-      open
-    }
-  })
+      open,
+    };
+  });
 
   const open = (type: IAction, data?: IUser.UserInfo) => {
-    setVisible(true)
-    setAction(type)
+    setVisible(true);
+    setAction(type);
 
     // 编辑时
     if (type === 'edit' && data) {
       // ✅表单赋值，data字段比 表单多，setFieldsValue只赋值它需要的
       // ✅userId 可使用 隐藏域，省去使用状态变量
-      form.setFieldsValue(data)
+      form.setFieldsValue(data);
     }
-  }
-
+  };
 
   const handleSubmit = async () => {
-    const valid = await form.validateFields()
+    const valid = await form.validateFields();
 
     if (valid) {
       const params = {
         ...form.getFieldsValue(),
-        userImg: ''
-      }
+        userImg: '',
+      };
 
       if (action === 'create') {
-        api.createUser(params)
-        message.success('创建成功')
+        api.createUser(params);
+        message.success('创建成功');
       } else if (action === 'edit') {
-        api.editUser(params)
-        message.success('修改成功')
+        api.editUser(params);
+        message.success('修改成功');
       }
 
-      handleCancel()
-      props.update()
+      handleCancel();
+      props.update();
     }
-  }
+  };
   const handleCancel = () => {
-    setVisible(false)
-    form.resetFields()
-    setImageUrl('')
-  }
+    setVisible(false);
+    form.resetFields();
+    setImageUrl('');
+  };
 
-  // 上传前文件校验  
+  // 上传前文件校验
   const beforeUpload = (file: FileType) => {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    const isJpgOrPng =
+      file.type === 'image/jpeg' ||
+      file.type === 'image/png';
     if (!isJpgOrPng) {
       message.error('只能上传 JPG/PNG 图片!');
     }
@@ -82,26 +128,28 @@ export default function CreateUser(props: IModalProp) {
       message.error('图片需要小于 2MB!');
     }
     return isJpgOrPng && isLt2M;
-  }
+  };
 
   // 上传过程
-  const handleChange: UploadProps['onChange'] = (info) => {
+  const handleChange: UploadProps['onChange'] = info => {
     if (info.file.status === 'uploading') {
       setLoading(true);
       return;
     } else if (info.file.status === 'done') {
       // 返回体
-      const { code } = info.file.response
+      const { code } = info.file.response;
       if (code === 0) {
         message.success('上传成功');
-        getBase64(info.file.originFileObj as FileType, (url) => {
-          setLoading(false);
-          setImageUrl(url);
-        });
+        getBase64(
+          info.file.originFileObj as FileType,
+          url => {
+            setLoading(false);
+            setImageUrl(url);
+          },
+        );
       } else {
         message.error('上传失败');
       }
-
     } else if (info.file.status === 'error') {
       message.error('上传失败');
     }
@@ -114,84 +162,117 @@ export default function CreateUser(props: IModalProp) {
       onOk={handleSubmit}
       onCancel={handleCancel}
       okText='确定'
-      cancelText='取消'
-    >
-      <Form form={form} labelCol={{ span: 4 }} labelAlign="right" >
-        <Form.Item name="userId" hidden>
+      cancelText='取消'>
+      <Form
+        form={form}
+        labelCol={{ span: 4 }}
+        labelAlign='right'>
+        <Form.Item name='userId' hidden>
           {/* 隐藏域 userId ✅ */}
           <Input />
         </Form.Item>
         <Form.Item
-          label="用户名称"
-          name="userName"
+          label='用户名称'
+          name='userName'
           rules={[
             { required: true, message: '请输入内容' },
-            { min: 2, max: 12, message: '用户名称最小5个字符，最大12个字符' },
-          ]}
-        >
-          <Input placeholder="请输入用户名称"></Input>
+            {
+              min: 2,
+              max: 12,
+              message: '用户名称最小5个字符，最大12个字符',
+            },
+          ]}>
+          <Input placeholder='请输入用户名称'></Input>
         </Form.Item>
         <Form.Item
-          label="用户邮箱"
-          name="userEmail"
+          label='用户邮箱'
+          name='userEmail'
           rules={[
             { required: true, message: '请输入内容' },
             { type: 'email', message: '请输入正确的邮箱' },
             // { pattern: /^\w+@123.com$/, message: '邮箱必须以@123.com结尾' }, // 先注释了
-          ]}
-        >
-          <Input placeholder="请输入用户邮箱" disabled={action === 'edit'}></Input>
+          ]}>
+          <Input
+            placeholder='请输入用户邮箱'
+            disabled={action === 'edit'}></Input>
         </Form.Item>
         <Form.Item
-          label="手机号"
-          name="mobile"
+          label='手机号'
+          name='mobile'
+          rules={
+            [
+              // { len: 11, message: '手机号必须为11位数字' }, // 先注释了
+              // { pattern: /1[1-9]\d{9}/, message: '手机号必须为1开头的11位数字' }, // 先注释了
+            ]
+          }>
+          <Input
+            type='number'
+            placeholder='请输入手机号'></Input>
+        </Form.Item>
+        <Form.Item
+          label='部门'
+          name='deptId'
           rules={[
-            // { len: 11, message: '手机号必须为11位数字' }, // 先注释了
-            // { pattern: /1[1-9]\d{9}/, message: '手机号必须为1开头的11位数字' }, // 先注释了
-          ]}
-        >
-          <Input type="number" placeholder="请输入手机号"></Input>
+            { required: true, message: '请选择部门' },
+          ]}>
+          <TreeSelect
+            placeholder='请选择部门'
+            allowClear
+            treeDefaultExpandAll
+            showCheckedStrategy={TreeSelect.SHOW_ALL}
+            fieldNames={{
+              label: 'deptName',
+              value: '_id',
+            }}
+            treeData={deptList}
+          />
         </Form.Item>
-        <Form.Item label="部门" name="deptId"
-        >
-          <Input placeholder="请输入部门"></Input>
+        <Form.Item label='岗位' name='job'>
+          <Input placeholder='请输入岗位'></Input>
         </Form.Item>
-        <Form.Item label="岗位" name="job">
-          <Input placeholder="请输入岗位"></Input>
-        </Form.Item>
-        <Form.Item label="状态" name="state">
+        <Form.Item label='状态' name='state'>
           <Select style={{ width: 120 }}>
             <Select.Option value={1}>在职</Select.Option>
             <Select.Option value={2}>离职</Select.Option>
             <Select.Option value={3}>试用期</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item label="角色" name="role">
-          <Input placeholder="请输入角色"></Input>
+        <Form.Item label='系统角色' name='roleList'>
+          <Select placeholder='请选择角色'>
+            {roleList.map(role => (
+              <Select.Option
+                value={role._id}
+                key={role._id}>
+                {role.roleName}
+              </Select.Option>
+            ))}
+          </Select>
         </Form.Item>
-        <Form.Item label="用户头像">
+        <Form.Item label='用户头像'>
           <Upload
-            listType="picture-circle"
+            listType='picture-circle'
             showUploadList={false}
             headers={{
-              Authorization: 'Bearer ' + token
+              Authorization: 'Bearer ' + token,
             }}
             action={'/mock-local-api/users/upload'}
             beforeUpload={beforeUpload}
-            onChange={handleChange}
-          >
-            {imgUrl
-              ? <img src={imgUrl} style={{ width: '100%' }} />
-              : <div>
-                {loading ? <LoadingOutlined /> : <PlusOutlined />}
-                <div>
-                  上传头像
-                </div>
-              </div>}
-
+            onChange={handleChange}>
+            {imgUrl ? (
+              <img src={imgUrl} style={{ width: '100%' }} />
+            ) : (
+              <div>
+                {loading ? (
+                  <LoadingOutlined />
+                ) : (
+                  <PlusOutlined />
+                )}
+                <div>上传头像</div>
+              </div>
+            )}
           </Upload>
         </Form.Item>
       </Form>
-    </Modal >
-  )
+    </Modal>
+  );
 }

@@ -12,7 +12,7 @@ export default {
   getUserInfo() {
     return request.get<IUser.UserInfo>('/users/getUserInfo')
   },
-  // 获取权限列表
+  // 获取权限列表（菜单权限列表 permissionList 并没有 和 角色关联）
   getPermissionList() {
     return request.get<{ buttonList: string[], menuList: IMenu.MenuItem[] }>('/users/getPermissionList')
   },

@@ -10,7 +10,7 @@ function generateCreateTime() {
   return now;
 }
 
-//  角色 checkedKeys、halfCheckedKeys 和 菜单 _id 一样 
+//  角色 checkedKeys、halfCheckedKeys 和 菜单 _id 一样 2
 export const roleList = defineMockData('roleList', {
   page: {
     pageNum: 1,

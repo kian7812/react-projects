@@ -28,6 +28,10 @@ export namespace IUser {
     state?: number;
     mobile?: string;
     job?: string;
+    // 0: '超级管理员',
+    // 1: '管理员',
+    // 2: '体验管理员',
+    // 3: '普通',
     role?: number;
     roleList?: string;
     createId?: number;
@@ -191,7 +195,7 @@ export namespace IRole {
       // 用于Tree回显，选中的都是最末端，不包含父级的，在Tree组件里，所有子集全选父级自动勾选
       // 默认末级都是按钮类型了，根据按钮类型做判断，严谨吗，如果没有查看、操作编辑呢
       checkedKeys: string[]
-      // 用于菜单列表，父级菜单
+      // 用于渲染左侧菜单列表，父级菜单
       halfCheckedKeys: string[]
       //  角色 checkedKeys、halfCheckedKeys 和 菜单 _id 一样 
     }

@@ -30,6 +30,16 @@ export default defineMock([
       })
     }
   },
+  // 所有角色
+  {
+    url: MOCK_LOCAL_API + '/role/all/list',
+    delay: 200,
+    body({ body, query, params, headers }) {
+      return validateAuth(headers, () => {
+        return roleList.value.list
+      })
+    }
+  },
   // 创建
   {
     url: MOCK_LOCAL_API + '/role/create',

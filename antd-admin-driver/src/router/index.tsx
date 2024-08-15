@@ -2,7 +2,8 @@
 
 import { createBrowserRouter, Navigate, useRoutes } from 'react-router-dom';
 import Login from '@/views/Login';
-import NotFound from '@/views/404';
+import NotFound404 from '@/views/404';
+import NotFound403 from '@/views/403';
 import Welcome from '@/views/Welcome';
 import DefaultLayout from '@/layout/DefaultLayout';
 import Dashboard from '@/views/Dashboard';
@@ -13,7 +14,7 @@ import MenuList from '@/views/System/Menu/MenuList';
 import AuthLoader from './AuthLoader';
 import RoleList from '@/views/System/Role/RoleList';
 
-const router = [
+export const router = [
   {
     path: '/',
     element: <Navigate to='/welcome' /> // 使用 Navigate 重定向
@@ -51,6 +52,9 @@ const router = [
       },
       {
         path: '/menuList',
+        meta: {
+          auth: false // 关闭权限验证，测试
+        },
         element: <MenuList />
       },
       {
@@ -67,7 +71,12 @@ const router = [
   // 404
   {
     path: '/404',
-    element: <NotFound />
+    element: <NotFound404 />
+  },
+  // 403
+  {
+    path: '/403',
+    element: <NotFound403 />
   }
 ]
 
