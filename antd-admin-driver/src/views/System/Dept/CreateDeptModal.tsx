@@ -117,7 +117,7 @@ export default function CreateDeptModal(props: IModalProp) {
         >
           <Select>
             {allUsers.map((item) => (
-              <Select.Option value={item.userName} key={item._id}>
+              <Select.Option value={item.userName} key={item.userId}>
                 {item.userName}
               </Select.Option>
             ))}

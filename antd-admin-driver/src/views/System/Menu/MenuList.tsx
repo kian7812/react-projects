@@ -12,7 +12,7 @@ export default function MenuList() {
   const [dataSource, setDataSource] = useState<IMenu.MenuItem[]>([]);
   // ✅dataSource 只要包含children，table自定就树形结构了
   const menuRef = useRef<{
-    open: (type: IAction, data?: IMenu.MenuItem | { parentId: number }) => void
+    open: (type: IAction, data?: IMenu.MenuItem | { parentId: string }) => void
   }>()
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function MenuList() {
   const handleCreate = () => {
     menuRef.current?.open('create')
   }
-  const handleSubCreate = (id: number) => {
+  const handleSubCreate = (id: string) => {
     menuRef.current?.open('create', { parentId: id })
   }
   // 编辑
@@ -63,7 +63,7 @@ export default function MenuList() {
     })
   }
   // 删除接口
-  const reqDelete = async (id: number) => {
+  const reqDelete = async (id: string) => {
     await api.deleteMenu({
       _id: id
     })

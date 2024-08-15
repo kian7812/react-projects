@@ -12,7 +12,7 @@ export default function DeptList() {
   const [dataSource, setDataSource] = useState<IDept.DeptItem[]>([]);
   // ✅dataSource 只要包含children，table自定就树形结构了
   const deptRef = useRef<{
-    open: (type: IAction, data?: IDept.DeptItem | { parentId: number }) => void
+    open: (type: IAction, data?: IDept.DeptItem | { parentId: string }) => void
   }>()
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function DeptList() {
     deptRef.current?.open('create')
   }
 
-  const handleSubCreate = (id: number) => {
+  const handleSubCreate = (id: string) => {
     deptRef.current?.open('create', { parentId: id })
   }
 
@@ -50,7 +50,7 @@ export default function DeptList() {
   }
 
   // 删除
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     Modal.confirm({
       title: '删除确认',
       content: <span>确认删除该部门吗</span>,
@@ -60,7 +60,7 @@ export default function DeptList() {
     })
   }
 
-  const reqDeleteDept = async (id: number) => {
+  const reqDeleteDept = async (id: string) => {
     await api.deleteDept({
       _id: id
     })

@@ -10,6 +10,8 @@ export namespace ILogin {
   }
 }
 
+// ✅字段都以mock后端数据为准
+
 // 用户管理
 export namespace IUser {
   // 接口入参类型，并不是具体某个接口，可参考这种定义方式
@@ -20,7 +22,6 @@ export namespace IUser {
   }
   // 接口返回Item类型，并不是具体某个接口，可参考这种定义方式
   export interface UserInfo {
-    _id: number;
     userId: number;
     userName: string;
     userEmail?: string;
@@ -87,7 +88,7 @@ export namespace IDept {
     deptName?: string
   }
   export interface DeptItem {
-    _id: number;
+    _id: string;
     parentId?: number
     createTime: string
     updateTime: string
@@ -104,11 +105,11 @@ export namespace IDept {
   }
   // 编辑
   export interface EditParams extends CreateParams {
-    _id: number
+    _id: string
   }
   // 删除
   export interface DeleteParams {
-    _id: number
+    _id: string
   }
 }
 

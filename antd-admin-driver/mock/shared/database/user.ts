@@ -1,286 +1,240 @@
-import { defineMockData } from 'vite-plugin-mock-dev-server'
+import { defineMockData } from 'vite-plugin-mock-dev-server';
 
-const dayTimestamp = 1000 * 60 * 60 * 24
-const monthTimestamp = dayTimestamp * 30
-let now = Date.now()
+const dayTimestamp = 1000 * 60 * 60 * 24;
+const monthTimestamp = dayTimestamp * 30;
+let now = Date.now();
 function generateCreateTime() {
-  now = now - (monthTimestamp * 2)
-  return now
+  now = now - monthTimestamp * 2;
+  return now;
 }
 
 // id 递加 每次新增加
-let idNumber = 13
+let idNumber = 100028;
 
 export const users = defineMockData('users', [
-  { id: 1, name: 'Danny', },
-  { id: 2, name: 'Tom', },
-])
-
-
+  { id: 1, name: 'Danny' },
+  { id: 2, name: 'Tom' },
+]);
 
 export const usersList = defineMockData('usersList', {
   page: {
     pageNum: 1,
     pageSize: 10,
-    total: 0
+    total: 0,
   },
   list: [
     {
-      _id: 1,
-      userId: 1001,
-      userName: 'Tom',
-      userEmail: 'Tom@xx.com',
-      state: 1,
-      mobile: '123331',
-      job: '前端开发',
-      role: 0,
-      roleList: '',
-      createId: 1,
+      userImg:
+        'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      createTime: '2023-11-22T10:44:25.532Z',
+      userId: 1000016,
+      userName: 'JackMa',
+      userEmail: 'jackma@mars.com',
+      mobile: '17011221122',
+      sex: 0,
       deptId: '',
-      deptName: '前端部门',
-      userImg: '',
-      createTime: generateCreateTime()
-    },
-    {
-      _id: 2,
-      userId: 1002,
-      userName: 'Even',
-      userEmail: 'Even@xx.com',
+      deptName: '',
+      job: '前端工程师',
       state: 1,
-      mobile: '334433',
-      job: '测试工程师',
-      role: 1,
-      roleList: '',
-      createId: 1,
-      deptId: '',
-      deptName: '测试部门',
-      userImg: '',
-      createTime: generateCreateTime()
-    },
-    {
-      _id: 3,
-      userId: 1003,
-      userName: 'Even3',
-      userEmail: 'Even3@xx.com',
-      state: 2,
-      mobile: '423432',
-      job: '测试工程师3',
       role: 2,
-      roleList: '',
-      createId: 1,
-      deptId: '',
-      deptName: '测试部门',
-      userImg: '',
-      createTime: generateCreateTime()
+      createId: 1000002,
+      lastLoginTime: '2024-08-15T03:15:31.202Z',
+      roleList: '655dbedb11c02c8597dce76f',
     },
     {
-      _id: 4,
-      userId: 1004,
-      userName: 'Tom4',
-      userEmail: 'Tom4@xx.com',
-      state: 3,
-      mobile: '3344443433',
-      job: '测试工程师',
-      role: 3,
-      roleList: '',
-      createId: 1,
-      deptId: '',
-      deptName: '测试部门',
-      userImg: '',
-      createTime: generateCreateTime()
-    },
-    {
-      _id: 5,
-      userId: 1005,
-      userName: 'Even5',
-      userEmail: 'Even5@xx.com',
-      state: 3,
-      mobile: '334433',
-      job: '测试工程师',
-      role: 3,
-      roleList: '',
-      createId: 1,
-      deptId: '',
-      deptName: '测试部门',
-      userImg: '',
-      createTime: generateCreateTime(),
-    },
-    {
-      _id: 6,
-      userId: 1006,
-      userName: 'Even6',
-      userEmail: 'Even6@xx.com',
+      userId: 100017,
+      userName: 'JackBean',
+      userEmail: 'jackbean@mars.com',
+      deptId: '655dbef811c02c8597dce77a',
+      deptName: '大前端',
       state: 1,
-      mobile: '334433',
-      job: '测试工程师',
+      role: 1,
+      roleList: '655dbedb11c02c8597dce76f',
+      createId: 1000002,
+      userImg: '',
+      createTime: '2023-11-22T08:52:47.963Z',
+      lastLoginTime: '2024-07-22T08:15:24.102Z',
+      __v: 0,
+    },
+    {
+      userId: 100018,
+      userName: '9549587',
+      userEmail: '9549587@mars.com',
+      deptId: '',
+      deptName: '',
+      state: 1,
       role: 1,
       roleList: '',
-      createId: 1,
-      deptId: '',
-      deptName: '测试部门',
-      userImg: '',
-      createTime: generateCreateTime(),
+      createId: 1000002,
+      userImg:
+        'http://api-driver.marsview.cc/3f9393c68f57ac57704652f00.png',
+      createTime: '2023-11-22T08:52:47.963Z',
+      lastLoginTime: '2024-03-05T07:18:46.815Z',
+      __v: 0,
+      job: '测试',
     },
     {
-      _id: 7,
-      userId: 1007,
-      userName: 'Even7',
-      userEmail: 'Eve7n@xx.com',
+      userId: 100020,
+      userName: '1366143860',
+      userEmail: '1366143860@mars.com',
+      deptId: '6568c7254a54800ac8d5b18e',
+      deptName: '部门5',
       state: 1,
-      mobile: '334433',
-      job: '测试工程师',
       role: 1,
       roleList: '',
-      createId: 1,
-      deptId: '',
-      deptName: '测试部门',
-      userImg: '',
-      createTime: generateCreateTime(),
+      createId: 1000002,
+      userImg:
+        'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      createTime: '2023-11-22T08:52:47.963Z',
+      lastLoginTime: '2024-04-14T07:12:57.797Z',
+      mobile: '13072361279',
+      job: '前端1',
     },
     {
-      _id: 8,
-      userId: 1008,
-      userName: 'Even8',
-      userEmail: 'Even8@xx.com',
+      userId: 100022,
+      userName: '413401333',
+      userEmail: '413401333@mars.com',
+      deptId: '6582ae994a54800ac8d76b80',
+      deptName: '前端',
       state: 1,
-      mobile: '334433',
-      job: '测试工程师',
       role: 1,
-      roleList: '',
-      createId: 1,
-      deptId: '',
-      deptName: '测试部门',
-      userImg: '',
-      createTime: generateCreateTime(),
+      roleList: '6582aeb44a54800ac8d76b88',
+      createId: 1000002,
+      userImg:
+        'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      createTime: '2023-11-22T08:52:47.963Z',
+      lastLoginTime: '2024-06-01T06:06:23.234Z',
+      job: '前端',
     },
     {
-      _id: 9,
-      userId: 1009,
-      userName: 'Even9',
-      userEmail: 'Even@xx.com',
+      userId: 100023,
+      userName: '1050732226',
+      userEmail: '1050732226@mars.com',
+      deptId: '',
+      deptName: '大前端',
       state: 1,
-      mobile: '334433',
-      job: '测试工程师',
       role: 1,
       roleList: '',
-      createId: 1,
-      deptId: '',
-      deptName: '测试部门',
-      userImg: '',
-      createTime: generateCreateTime(),
+      createId: 1000002,
+      userImg:
+        'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      createTime: '2023-11-22T08:52:47.963Z',
+      lastLoginTime: '2024-03-08T08:33:42.675Z',
     },
     {
-      _id: 10,
-      userId: 1010,
-      userName: 'Even10',
-      userEmail: 'Even@xx.com',
+      userId: 100024,
+      userName: '191337035',
+      userEmail: '191337035@mars.com',
+      deptId: '',
+      deptName: '大前端',
       state: 1,
-      mobile: '334433',
-      job: '测试工程师',
       role: 1,
       roleList: '',
-      createId: 1,
-      deptId: '',
-      deptName: '测试部门',
-      userImg: '',
-      createTime: generateCreateTime(),
+      createId: 1000002,
+      userImg:
+        'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      createTime: '2023-11-22T08:52:47.963Z',
+      lastLoginTime: '2024-05-29T02:02:06.830Z',
     },
     {
-      _id: 11,
-      userId: 1011,
-      userName: 'Even11',
-      userEmail: 'Even@xx.com',
+      userId: 100025,
+      userName: '717210290',
+      userEmail: '717210290@mars.com',
+      deptId: '',
+      deptName: '大前端',
       state: 1,
-      mobile: '334433',
-      job: '测试工程师',
       role: 1,
       roleList: '',
-      createId: 1,
-      deptId: '',
-      deptName: '测试部门',
-      userImg: '',
-      createTime: generateCreateTime(),
+      createId: 1000002,
+      userImg:
+        'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      createTime: '2023-11-22T08:52:47.963Z',
+      lastLoginTime: '2024-07-01T16:46:53.689Z',
     },
     {
-      _id: 12,
-      userId: 1012,
-      userName: 'Even11',
-      userEmail: 'Even@xx.com',
+      userId: 100027,
+      userName: '475721797',
+      userEmail: '475721797@mars.com',
+      deptId: '65eacdb84a54800ac8dd6183',
+      deptName: '2312312',
       state: 1,
-      mobile: '334433',
-      job: '测试工程师',
       role: 1,
-      roleList: '',
-      createId: 1,
-      deptId: '',
-      deptName: '测试部门',
-      userImg: '',
-      createTime: generateCreateTime(),
+      roleList: '65eaeafb4a54800ac8dd6429',
+      createId: 1000002,
+      userImg:
+        'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      createTime: '2023-11-22T08:52:47.963Z',
+      lastLoginTime: '2024-07-01T16:42:10.830Z',
     },
     {
-      _id: 13,
-      userId: 1013,
-      userName: 'Even11',
-      userEmail: 'Even@xx.com',
+      userId: 100028,
+      userName: '1667519970',
+      userEmail: '1667519970@mars.com',
+      deptId: '666020984a54800ac8e38f05',
+      deptName: '产品中心',
       state: 1,
-      mobile: '334433',
-      job: '测试工程师',
       role: 1,
-      roleList: '',
-      createId: 1,
-      deptId: '',
-      deptName: '测试部门',
-      userImg: '',
-      createTime: generateCreateTime(),
+      roleList: '665fd3194a54800ac8e38b84',
+      createId: 1000002,
+      userImg:
+        'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      createTime: '2023-11-22T08:52:47.963Z',
+      lastLoginTime: '2024-07-23T01:57:46.038Z',
+      job: '产品经理',
+      mobile: '16675199700',
     },
-  ]
-})
+  ],
+});
 
-export const createOneUser = (params) => {
+export const createOneUser = params => {
   const item = {
-    _id: 1,
-    userId: 1001,
-    createId: 1,
+    userImg:
+      'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    createTime: generateCreateTime(),
+    userId: 0,
     userName: '',
     userEmail: '',
-    state: 0,
     mobile: '',
-    job: '',
-    role: 0,
-    roleList: '',
+    sex: 0,
     deptId: '',
     deptName: '',
-    userImg: '',
-    createTime: generateCreateTime()
-  }
+    job: '',
+    state: 1,
+    role: 2,
+    createId: 1000002,
+    lastLoginTime: '',
+    roleList: '',
+  };
 
-  idNumber = idNumber + 1
-  const _id = idNumber
-  const userId = 1000 + _id
+  idNumber = idNumber + 1;
+  const userId = idNumber;
 
   const user = {
     ...item,
     ...params,
-    _id,
-    userId
-  }
+    userId,
+  };
 
-  usersList.value.list.push(user)
-}
+  usersList.value.list.push(user);
+};
 
-export const editOneUser = (params) => {
-  const index = usersList.value.list.findIndex(u => Number(u.userId) === Number(params.userId))
-  const item = usersList.value.list[index]
+export const editOneUser = params => {
+  const index = usersList.value.list.findIndex(
+    u => Number(u.userId) === Number(params.userId),
+  );
+  const item = usersList.value.list[index];
   usersList.value.list.splice(index, 1, {
     ...item,
-    ...params
-  })
-}
+    ...params,
+  });
+};
 
 // 删除一个或多个，一般真是接口，不做真删除
-export const deleteUser = (params) => {
-  params.userIds.forEach((id) => {
-    const index = usersList.value.list.findIndex(u => Number(u.userId) === Number(id))
-    usersList.value.list.splice(index, 1)
-  })
-}
+export const deleteUser = params => {
+  params.userIds.forEach(userId => {
+    const index = usersList.value.list.findIndex(
+      u => Number(u.userId) === Number(userId),
+    );
+    usersList.value.list.splice(index, 1);
+  });
+};
