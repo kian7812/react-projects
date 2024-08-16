@@ -13,6 +13,7 @@ import DeptList from '@/views/System/Dept/DeptList';
 import MenuList from '@/views/System/Menu/MenuList';
 import AuthLoader from './AuthLoader';
 import RoleList from '@/views/System/Role/RoleList';
+import OrderList from '@/views/Order/OrderList';
 
 export const router = [
   {
@@ -60,6 +61,10 @@ export const router = [
       {
         path: '/roleList',
         element: <RoleList />
+      },
+      {
+        path: '/orderList',
+        element: <OrderList />
       },
     ]
   },

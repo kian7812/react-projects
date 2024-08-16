@@ -201,3 +201,55 @@ export namespace IRole {
     }
   }
 }
+
+// 订单
+export namespace IOrder {
+  export enum IState {
+    doing = 1, // 进行中
+    done = 2, // 已完成
+    timeout = 3, // 超时
+    cancel = 4 // 取消
+  }
+
+  export interface CreateParams {
+    cityName: string
+    userName: string
+    mobile: number
+    startAddress: string
+    endAddress: string
+    orderAmount: number
+    userPayAmount: number
+    driverAmount: number
+    payType: number  // 1: 微信 2: 支付宝
+    driverName: string
+    vehicleName: string // 订单车型
+    state: IState // ✅直接用enum
+    useTime: string // 用车时间
+    endTime: string
+  }
+
+  export interface OrderItem extends CreateParams {
+    _id: string
+    orderId: string
+    route: Array<{ lng: string; lat: string }> // 轨迹坐标
+    createTime: string
+    remark: string
+  }
+
+  export interface SearchParams {
+    orderId?: string
+    userName?: string
+    state?: IState
+  }
+  // 带分页
+  export interface Params extends PageParams {
+    orderId?: string
+    userName?: string
+    state?: IState
+  }
+  // 字段
+  export interface DictItem {
+    id: string
+    name: string
+  }
+}

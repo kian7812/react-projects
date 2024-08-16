@@ -15,3 +15,7 @@ export interface IModalProp2<T = any> {
   getModalParams: () => { type: IAction, data?: T }
   update: () => void
 }
+
+export interface IModalDetailProp {
+  mRef: MutableRefObject<{ open: (id: string) => void } | undefined>
+}
