@@ -3,6 +3,7 @@ import axios, { AxiosError } from "axios";
 import { ResponseResult } from '@/types/modules/common';
 import storage from "./storage";
 import { message } from '@/components/AntdGlobal'
+import downloadFile from "./download";
 
 // 创建实例
 const instance = axios.create({
@@ -41,6 +42,11 @@ instance.interceptors.request.use(function (config) {
 instance.interceptors.response.use(function (response) {
   // 2xx 范围内的状态码都会触发该函数。
   // 对响应数据做点什么
+
+  // ✅返回Blob二进制流，直接返回
+  if (response.config.responseType === 'blob') {
+    return response
+  }
 
   // console.log(123, response);
   // axios 的 response，包括的 result 是服务端返回数据
@@ -87,5 +93,16 @@ export default {
   },
   post<T>(url: string, params?: any, options: IConfig = { showLoading: true, showError: true }): Promise<T> {
     return instance.post(url, params, options)
+  },
+  // ✅下载文件，返回Blob对象 二进制流
+  downloadFile(url: string, data: any, fileName = 'FileName.xlsx') {
+    instance({
+      url,
+      data,
+      method: 'post',
+      responseType: 'blob'
+    }).then((response) => {
+      downloadFile(response)
+    })
   }
 }

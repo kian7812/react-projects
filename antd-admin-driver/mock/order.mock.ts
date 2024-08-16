@@ -1,5 +1,5 @@
 import { defineMock } from 'vite-plugin-mock-dev-server'
-import { orderList, vehicleList, cityList, createOrder, orderDetail } from './shared/database/order'
+import { orderList, vehicleList, cityList, createOrder, orderDetail, deleteOrder } from './shared/database/order'
 import { MOCK_LOCAL_API } from './shared/utils/constants'
 import { validateAuth } from './shared/utils/middleware'
 
@@ -58,7 +58,7 @@ export default defineMock([
       })
     }
   },
-  // 编辑
+  // 详情
   {
     url: MOCK_LOCAL_API + '/order/detail',
     delay: 200,
@@ -68,28 +68,17 @@ export default defineMock([
       })
     }
   },
-  // // 设置权限
-  // {
-  //   url: MOCK_LOCAL_API + '/order/update/permission',
-  //   delay: 200,
-  //   body({ body, query, params, headers }) {
-  //     return validateAuth(headers, () => {
-  //       editRole(body)
-  //       return true
-  //     })
-  //   }
-  // },
-  // // 删除
-  // {
-  //   url: MOCK_LOCAL_API + '/role/delete',
-  //   delay: 200,
-  //   body({ body, query, params, headers }) {
-  //     return validateAuth(headers, () => {
-  //       deleteRole(body)
-  //       return true
-  //     })
-  //   }
-  // },
+  // 删除
+  {
+    url: MOCK_LOCAL_API + '/order/delete',
+    delay: 200,
+    body({ body, query, params, headers }) {
+      return validateAuth(headers, () => {
+        deleteOrder(body)
+        return true
+      })
+    }
+  },
 ])
 
 

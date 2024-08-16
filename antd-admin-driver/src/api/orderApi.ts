@@ -30,12 +30,12 @@ export default {
   // editOrder(params: IOrder.EditParams) {
   //   return request.post('/order/edit', params)
   // },
-  // // 删除
-  // deleteOrder(params: IOrder.DeleteParams) {
-  //   return request.post('/order/delete', params)
-  // },
-  // // 设置权限
-  // updatePermission(params: IOrder.Permission) {
-  //   return request.post('/order/update/permission', params)
-  // },
+  // 删除
+  deleteOrder(params: { orderId: string }) {
+    return request.post('/order/delete', params)
+  },
+  // 导出
+  exportData(params: IOrder.SearchParams) {
+    return request.downloadFile('/order/export', params)
+  },
 }

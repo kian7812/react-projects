@@ -1,9 +1,7 @@
 import { IOrder } from "@/types/modules/api";
 import { formatDate } from "@/utils/localeDate";
-import { Button, Form, Input, Select, Space, Table, TableColumnsType } from "antd";
+import { Button, Form, Input, Modal, Select, Space, Table, TableColumnsType } from "antd";
 import { useEffect, useRef, useState } from "react";
-// import CreateUserDialog from "./CreateUserDialog";
-import { IAction, IModalProp } from "@/types/modal";
 import { useAntdTable } from "ahooks";
 import { message } from '@/components/AntdGlobal'
 import orderApi from "@/api/orderApi";
@@ -77,26 +75,29 @@ export default function OrderList() {
     detailRef.current?.open(id)
   }
 
-
   // 删除
-  // const handleDel = (userId: number) => {
-  //   Modal.confirm({
-  //     title: '删除确认',
-  //     content: <span>确认删除该用户吗</span>,
-  //     onOk: () => {
-  //       delUserReq([userId])
-  //     }
-  //   })
-  // }
+  const handleDel = (id: string) => {
+    Modal.confirm({
+      title: '删除确认',
+      content: <span>确认删除该订单吗</span>,
+      onOk: () => {
+        delUserReq(id)
+      }
+    })
+  }
 
-  // 删除用户 接口
-  // const delUserReq = (ids: number[]) => {
-  //   api.delUser({ userIds: ids }).then(() => {
-  //     message.success('删除成功')
-  //     setUserIds([]) // 删除完重置
-  //     handleReset()
-  //   })
-  // }
+  // 删除用户接口
+  const delUserReq = (id: string) => {
+    orderApi.deleteOrder({ orderId: id }).then(() => {
+      message.success('删除成功')
+      handleReset()
+    })
+  }
+
+  // 文件导出
+  const handleExport = () => {
+    orderApi.exportData(form.getFieldsValue())
+  }
 
 
   // TableColumnsType ✅ 行值就能.出来
@@ -177,7 +178,7 @@ export default function OrderList() {
           <Button type="text" onClick={() => { handleDetail(record.orderId) }}>详情</Button>
           {/* <Button type="text" onClick={() => { handleDel(record.userId) }}>打点</Button> */}
           {/* <Button type="text" onClick={() => { handleDel(record.userId) }}>轨迹</Button> */}
-          {/* <Button type="text" danger onClick={() => { handleDel(record.userId) }}>删除</Button> */}
+          <Button type="text" danger onClick={() => { handleDel(record.orderId) }}>删除</Button>
         </Space>
       ),
     },
@@ -219,6 +220,7 @@ export default function OrderList() {
           <div className="title">订单列表</div>
           <div className="action">
             <Button type="primary" onClick={handleCreate}>新增</Button>
+            <Button type="primary" onClick={handleExport}>导出</Button>
           </div>
         </div>
 

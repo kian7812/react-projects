@@ -95,10 +95,10 @@ export const orderDetail = (params) => {
   return item
 };
 
-// // 删除
-// export const deleteRole = params => {
-//   const index = orderList.value.list.findIndex(
-//     o => o._id === params._id,
-//   );
-//   orderList.value.list.splice(index, 1);
-// };
+// 删除
+export const deleteOrder = (params) => {
+  const index = orderList.value.list.findIndex(
+    o => o.orderId === params.orderId,
+  );
+  orderList.value.list.splice(index, 1);
+};
