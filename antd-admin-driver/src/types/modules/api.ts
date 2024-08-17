@@ -253,3 +253,41 @@ export namespace IOrder {
     name: string
   }
 }
+
+// 司机
+export namespace IDriver {
+
+  export enum DriverStatus {
+    auth = 0, // 待认证
+    normal = 1, // 正常
+    temp = 2, // 暂时拉黑
+    always = 3, // 永久拉黑
+    stop = 4, // 停止推送
+  }
+
+  export interface SearchParams {
+    driverName?: string
+    accountStatus?: DriverStatus // ✅直接用enum
+  }
+
+  export interface DriverItem {
+    id: string
+    driverName: string
+    driverId: number
+    driverPhone: string
+    cityName: string
+    grade: boolean
+    driverLevel: number
+    accountStatus: DriverStatus
+    carNo: string
+    vehicleBrand: string // 车辆品牌
+    vehicleName: string // 车辆名称
+    onlineTime: number
+    driverAmount: number // 流水
+    rating: number // 评分
+    driverScore: number // 行为分
+    pushOrderCount: number // 推单数
+    orderCompleteCount: number
+    createTime: string
+  }
+}

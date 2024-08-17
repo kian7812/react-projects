@@ -14,6 +14,7 @@ import MenuList from '@/views/System/Menu/MenuList';
 import AuthLoader from './AuthLoader';
 import RoleList from '@/views/System/Role/RoleList';
 import OrderList from '@/views/Order/OrderList';
+import DriverList from '@/views/Order/DriverList';
 
 export const router = [
   {
@@ -65,6 +66,10 @@ export const router = [
       {
         path: '/orderList',
         element: <OrderList />
+      },
+      {
+        path: '/driverList',
+        element: <DriverList />
       },
     ]
   },

@@ -1,12 +1,13 @@
 import request from "@/utils/request";
-import { IOrder } from '@/types/modules/api'
+import { IDriver, IOrder } from '@/types/modules/api'
 import { ResultData } from "@/types/modules/common";
 
 export default {
   //【订单管理】
 
   // 列表
-  getOrderList(params?: IOrder.Params) { // 入参类型 和 👇🏻返回结果类型
+  getOrderList(params?: IOrder.Params) {
+    // ---------------- 👆🏻 入参类型 和 👇🏻返回结果类型，接口入参和返回data类型都有了✅
     return request.get<ResultData<IOrder.OrderItem>>('/order/list', params)
   },
   // 城市列表
@@ -37,5 +38,9 @@ export default {
   // 导出
   exportData(params: IOrder.SearchParams) {
     return request.downloadFile('/order/export', params)
+  },
+  // 获取司机列表
+  getDriverList(params?: IDriver.SearchParams) {
+    return request.get<ResultData<IDriver.DriverItem>>('/order/driver/list', params)
   },
 }
