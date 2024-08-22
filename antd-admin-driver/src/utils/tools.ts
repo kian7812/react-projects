@@ -12,7 +12,8 @@ export const searchRoute: any = (path: string, routes: any = []) => {
   for (const item of routes) {
     if (item.path === path) return item
     if (item.children) {
-      return searchRoute(path, item.children)
+      const result = searchRoute(path, item.children)
+      if (result) return result
     }
   }
 
@@ -33,4 +34,30 @@ export const formatMobile = (num?: string | number) => {
   if (!num) return ''
   const mobile = num.toString()
   return mobile.replace(/(\d{3})\d*(\d{4})/, '$1****$2')
+};
+
+
+/**
+ * 递归查找树的路径
+ * @params paths 需要返回的数据
+ * @params targetPath 要查找的路径
+ */
+
+export const findTreeNode = (tree: IMenu.MenuItem[], targetPath: string, paths: string[] = []): string[] => {
+  if (!tree) return []
+
+  for (const item of tree) {
+    paths.push(item.menuName)
+    if (item.path === targetPath) return paths
+
+    if (item.children?.length) {
+      const result = findTreeNode(item.children, targetPath, paths)
+      // result 到最后是否能找到，如果没有，再一层层pop出去
+      if (result?.length) return result
+    }
+
+    paths.pop()
+  }
+
+  return []
 };
