@@ -37,7 +37,7 @@ export default function NavTabs() {
     const route = searchRoute(pathname, data.menuList);
     if (!route) return; // 兼容 /welcome
     // 去重
-    if (!tabsList.find(o => o.key === route.path)) {
+    if (!tabsList.find((o) => o.key === route.path)) {
       tabsList?.push({
         key: route.path,
         label: route.menuName,
@@ -72,7 +72,7 @@ export default function NavTabs() {
       });
     }
     // 如果不是当前页面
-    setTabsList(tabsList.filter(o => o.key !== path));
+    setTabsList(tabsList.filter((o) => o.key !== path));
   };
 
   return (
@@ -82,12 +82,12 @@ export default function NavTabs() {
       tabBarStyle={{
         height: 40,
         marginBottom: 0,
-        backgroundColor: '#fff',
+        backgroundColor: 'var(--driver-bg-color)',
       }}
       type='editable-card'
       hideAdd
       onChange={handleChange}
-      onEdit={path => handleDel(path as string)}
+      onEdit={(path) => handleDel(path as string)}
     />
   );
 }
