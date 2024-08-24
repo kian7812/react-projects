@@ -112,7 +112,7 @@ export const router = [
   },
 ];
 
-// ✅使用 useRoutes 定义路由 返回 Router组件
+// ✅使用 useRoutes 定义路由 返回 Router组件，再使用<BrowserRouter>包裹
 // export function Router() {
 //   return useRoutes(router)
 // }
