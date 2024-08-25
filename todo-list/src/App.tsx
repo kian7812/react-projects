@@ -1,55 +1,63 @@
-import { Header } from '@/components/Header'
-import { ITodoItem } from '@/components/ToDoItem'
-import { AddToDo } from '@/components/AddToDo'
-import { ToDoList } from '@/components/ToDoList'
-import { useLocalStorage } from 'usehooks-ts'
-
+import { Header } from "@/components/Header";
+import { ITodoItem } from "@/components/ToDoItem";
+import { AddToDo } from "@/components/AddToDo";
+import { ToDoList } from "@/components/ToDoList";
+import { useLocalStorage } from "usehooks-ts";
 
 function App() {
-  const [list, setList] = useLocalStorage<ITodoItem[]>("todolist-local-key", [])
+  const [list, setList] = useLocalStorage<ITodoItem[]>(
+    "todolist-local-key",
+    []
+  );
 
   const addList = (newItem: string) => {
     setList((oldList) => {
       const newId =
         list.length === 0 ? 0 : Math.max(...oldList.map((v) => v.id), 0) + 1;
 
+      // ✅react新增列表项
       return [
         {
           id: newId,
           completed: false,
-          text: newItem
+          text: newItem,
         },
-        ...oldList
-      ]
-    })
-  }
+        ...oldList,
+      ];
+    });
+  };
   const markTaskStatus = (item: Omit<ITodoItem, "text">) => {
+    // ✅react编辑列表item
     setList((pre) => {
       return pre.map((i) => {
         if (i.id === item.id) {
           return {
             ...i,
-            ...item
-          }
+            ...item,
+          };
         } else {
-          return i
+          return i;
         }
-      })
-    })
-  }
+      });
+    });
+  };
   const deleteTask = (id: number) => {
     setList((l) => {
       return l.filter((e) => e.id !== id);
-    })
-  }
+    });
+  };
 
   return (
-    <section className='container space-y-3'>
+    <section className="container space-y-3">
       <Header />
       <AddToDo addList={addList} />
-      <ToDoList list={list} markTaskStatus={markTaskStatus} deleteTask={deleteTask} />
+      <ToDoList
+        list={list}
+        markTaskStatus={markTaskStatus}
+        deleteTask={deleteTask}
+      />
     </section>
-  )
+  );
 }
 
-export default App
+export default App;

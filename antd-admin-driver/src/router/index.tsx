@@ -112,10 +112,10 @@ export const router = [
   },
 ];
 
-// ✅使用 useRoutes 定义路由 返回 Router组件，再使用<BrowserRouter>包裹
+// ✅定义路由：使用 useRoutes，返回 Router组件，再使用<BrowserRouter>包裹
 // export function Router() {
 //   return useRoutes(router)
 // }
 
-// 推荐使用 api 定义路由，✅它支持loader，路由拦截
+// 推荐✅定义路由：使用 api，✅它支持loader，路由拦截
 export default createBrowserRouter(router);
